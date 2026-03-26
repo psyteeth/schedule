@@ -27,6 +27,10 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
   #mainTabs .tab{width:100%;text-align:center;box-sizing:border-box;}
   .school-name{font-size:26px!important;}
   .layout{grid-template-columns:1fr!important;}
+  .c{padding:4px 3px;min-height:60px;}
+  .dn{font-size:11px;margin-bottom:3px;}
+  .slot{font-size:8px;padding:2px 3px;margin-bottom:2px;line-height:1.3;}
+  .ch{font-size:9px;padding:6px 3px;}
 }
 .school-name{font-family:'Playfair Display',serif;font-size:42px;font-weight:600;letter-spacing:-0.03em;line-height:1.05;}
 .school-sub{font-size:12px;color:var(--text3);margin-top:6px;font-weight:300;letter-spacing:0.02em;}
@@ -218,6 +222,7 @@ const SIDEBAR_IO=`
   <div class="sb-price"><div><div class="sb-price-label">12 месяцев</div></div><span class="sb-price-val">108 000 ₽</span></div>
 </div>
 <hr class="sb-divider">
+<div style="font-size:12px;color:var(--text2);line-height:1.65;padding:10px 0;">Хотите понять, нужна ли вам работа с зубами через отношения? Приходите на бесплатную диагностику — разберём ваш случай и посмотрим, подходят ли вам инструменты Психостоматологии №1.</div>
 <a class="sb-btn" href="https://t.me/psyteeth" target="_blank">Записаться на бесплатную диагностику по зубу → @psyteeth</a>
 <a class="sb-btn sb-btn-outline" href="https://t.me/psy_teeth_official/439" target="_blank" style="margin-top:6px;">Посмотреть примеры диагностики — чат Психостоматологии №1</a>
 `;
@@ -358,11 +363,22 @@ function renderCal(){
     const cls=['c',isToday?'tod':'',isWeekend&&!isToday?'weekend':''].filter(Boolean).join(' ');
     html+=`<div class="${cls}"><div class="dn">${date}</div>`;
     if(mode===0){
-      (IO_SCHED[dow]||[]).forEach(s=>{html+=`<div class="slot ${s.cls}">${s.lbl}</div>`;});
+      const mob=window.innerWidth<621;
+      const IO_MOB={
+        1:[{cls:'st',lbl:'Таня 10–11'}],
+        2:[{cls:'sa',lbl:'Антон 08–09'}],
+        3:[{cls:'sg',lbl:'Гульназ 15–16'}],
+        4:[{cls:'sa',lbl:'Антон 08–09'},{cls:'sa',lbl:'10–11'},{cls:'st',lbl:'Таня 20–21'}],
+        5:[{cls:'sa',lbl:'Антон 08–09'},{cls:'sa',lbl:'10–11'}],
+        6:[{cls:'sa',lbl:'Антон 08–09'},{cls:'sa',lbl:'10–11'}],
+        0:[{cls:'sy',lbl:'Яна 11–12'}]
+      };
+      ((mob?IO_MOB:IO_SCHED)[dow]||[]).forEach(s=>{html+=`<div class="slot ${s.cls}">${s.lbl}</div>`;});
     } else {
-      if(isWeekday)html+=`<div class="slot skf">Тренировки Зубного кунг-фу</div>`;
-      if(money.has(date))html+=`<div class="slot sm">Денежный интенсив (бонус)</div>`;
-      if(masks.has(date))html+=`<div class="slot sn">Работа с маской (бонус)</div>`;
+      const mob=window.innerWidth<621;
+      if(isWeekday)html+=`<div class="slot skf">${mob?'ЗКФ':'Тренировки Зубного кунг-фу'}</div>`;
+      if(money.has(date))html+=`<div class="slot sm">${mob?'Деньги':'Денежный интенсив (бонус)'}</div>`;
+      if(masks.has(date))html+=`<div class="slot sn">${mob?'Маска':'Работа с маской (бонус)'}</div>`;
     }
     html+=`</div>`;
   }
@@ -370,6 +386,7 @@ function renderCal(){
 }
 
 render();
+window.addEventListener('resize',()=>renderCal());
 </script>
 </body>
 </html>
