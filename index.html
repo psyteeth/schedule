@@ -4,104 +4,129 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Расписание школы</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+:root{
+  --bg:#F7F5F2;
+  --surface:#FFFFFF;
+  --surface2:#F0EDE8;
+  --border:#E8E4DE;
+  --text:#1C1A18;
+  --text2:#6B6560;
+  --text3:#A8A29C;
+  --accent:#2D5016;
+  --accent2:#8B4513;
+  --radius:12px;
+  --radius-sm:8px;
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fff;color:#1a1a1a;padding:1.5rem;}
-}
-.w{max-width:1100px;margin:0 auto;}
-.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px;}
-.title{font-size:16px;font-weight:500;}
-.tabs{display:flex;gap:4px;margin-bottom:1rem;}
-.tab{padding:5px 14px;border:0.5px solid rgba(0,0,0,0.2);border-radius:8px;cursor:pointer;font-size:12px;color:#666;background:none;}
-.tab.on{background:#f0f0f0;color:#1a1a1a;font-weight:500;}
-.tab.on{background:#2a2a2a;color:#f0f0f0;}}
-.mnav{display:flex;align-items:center;gap:6px;}
-.mnav button{border:0.5px solid rgba(0,0,0,0.2);border-radius:8px;padding:3px 10px;font-size:12px;cursor:pointer;background:none;color:inherit;}
-.mnav button:hover{background:#f0f0f0;}
-.mnav button:hover{background:#2a2a2a;}}
-.mlbl{font-size:13px;font-weight:500;min-width:110px;text-align:center;}
-.leg{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1rem;}
-.li{display:flex;align-items:center;gap:5px;font-size:11px;color:#666;}
-.ld{width:9px;height:9px;border-radius:50%;}
-.layout{display:grid;grid-template-columns:1fr 220px;gap:12px;align-items:start;}
-@media(max-width:700px){.layout{grid-template-columns:1fr;}}
-.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:rgba(0,0,0,0.1);border-radius:12px;overflow:hidden;}
-}
-.c{background:#fff;padding:6px 8px;min-height:80px;}
-}
-.ch{background:#f5f5f5;padding:6px 8px;min-height:auto;text-align:center;font-size:11px;font-weight:500;color:#888;}
-}
-.dn{font-size:13px;font-weight:500;margin-bottom:4px;}
-.slot{border-radius:4px;padding:2px 5px;margin-bottom:2px;font-size:10px;line-height:1.35;}
-.empty{background:#f9f9f9;min-height:80px;}
-}
-.weekend{background:#fafafa;}
-}
-.sidebar{background:#fff;border:0.5px solid rgba(0,0,0,0.12);border-radius:12px;padding:1rem;display:flex;flex-direction:column;gap:10px;overflow-y:auto;max-height:600px;}
-}
-.sb-label{font-size:10px;font-weight:500;color:#aaa;letter-spacing:0.05em;margin-bottom:2px;text-transform:uppercase;}
-.sb-row{display:flex;flex-direction:column;gap:4px;}
-.sb-item{font-size:11px;color:#666;line-height:1.45;}
-}
-.sb-item b{color:#1a1a1a;font-weight:500;}
-}
-.sb-note{font-size:11px;color:#666;line-height:1.5;padding:6px 8px;background:#f5f5f5;border-radius:8px;}
-}
-.sb-bonus{font-size:11px;color:#27500A;line-height:1.5;padding:6px 8px;background:#EAF3DE;border-radius:8px;}
-}
-.sb-divider{border:none;border-top:0.5px solid rgba(0,0,0,0.1);}
-}
-.sb-price{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,0.08);}
-.sb-price:last-child{border-bottom:none;}
-.sb-price-label{font-size:11px;color:#666;}
-.sb-price-sub{font-size:10px;color:#aaa;}
-.sb-price-val{font-size:12px;font-weight:500;}
-.sb-price-val.big{color:#854F0B;}
-.sb-price-val.big{color:#EF9F27;}}
-.sb-btn{display:block;width:100%;padding:8px 12px;border-radius:8px;border:0.5px solid rgba(0,0,0,0.2);background:#f5f5f5;cursor:pointer;font-size:12px;font-weight:500;color:#1a1a1a;text-align:center;text-decoration:none;}
-.sb-btn:hover{background:#ebebeb;}
-.sb-btn:hover{background:#333;}}
-.tod{outline:2px solid #378ADD;outline-offset:-2px;}
-.tod .dn{color:#185FA5;}
-}
-.sa{background:#EEEDFE;color:#3C3489;}
-.st{background:#E1F5EE;color:#085041;}
-.sg{background:#FAEEDA;color:#633806;}
-.sy{background:#FBEAF0;color:#72243E;}
-.sm{background:#FCEBEB;color:#791F1F;font-weight:500;}
-.skf{background:#EAF3DE;color:#27500A;}
-.sn{background:#E6F1FB;color:#0C447C;}
+body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
-.st{background:#04342C;color:#9FE1CB;}
-.sg{background:#412402;color:#FAC775;}
-.sy{background:#4B1528;color:#F4C0D1;}
-.sm{background:#501313;color:#F7C1C1;}
-.skf{background:#173404;color:#C0DD97;}
-.sn{background:#042C53;color:#85B7EB;}
-}
+.page{max-width:1200px;margin:0 auto;padding:2rem 1.5rem;}
+
+/* Header */
+.header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2rem;gap:1rem;}
+.header-left{}
+.school-name{font-family:'Playfair Display',serif;font-size:28px;font-weight:600;color:var(--text);letter-spacing:-0.02em;line-height:1.2;}
+.school-sub{font-size:13px;color:var(--text3);margin-top:4px;font-weight:300;letter-spacing:0.03em;}
+.month-nav{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 16px;}
+.month-nav button{background:none;border:none;cursor:pointer;font-size:16px;color:var(--text2);padding:2px 6px;border-radius:6px;transition:background 0.15s;}
+.month-nav button:hover{background:var(--surface2);}
+.month-label{font-family:'Playfair Display',serif;font-size:15px;font-weight:500;min-width:120px;text-align:center;color:var(--text);}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:5px;width:fit-content;}
+.tab{padding:7px 18px;border-radius:var(--radius-sm);cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all 0.2s;border:none;background:none;}
+.tab.on{background:var(--text);color:#fff;box-shadow:0 2px 8px rgba(28,26,24,0.15);}
+
+/* Legend */
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:1.5rem;}
+.li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);font-weight:400;}
+.ld{width:8px;height:8px;border-radius:50%;}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:1fr 240px;gap:20px;align-items:start;}
+
+/* Calendar */
+.cal-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));}
+.ch{background:var(--surface2);padding:10px 8px;text-align:center;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;border-bottom:1px solid var(--border);}
+.c{padding:8px;min-height:90px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);transition:background 0.1s;}
+.c:nth-child(7n){border-right:none;}
+.c:hover{background:#FAFAF8;}
+.empty{background:var(--surface2);opacity:0.5;}
+.weekend{background:#FDFCFA;}
+.dn{font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;}
+.weekend .dn{color:var(--text2);}
+.slot{border-radius:5px;padding:3px 6px;margin-bottom:3px;font-size:10px;font-weight:500;line-height:1.4;}
+.tod{background:#F0F7FF!important;}
+.tod .dn{color:#1A5FA8;font-weight:700;}
+.tod{outline:2px solid #378ADD;outline-offset:-2px;border-radius:0;}
+
+/* Slot colors - warm, refined palette */
+.sa{background:#EEF0FF;color:#3730A3;}
+.st{background:#ECFDF5;color:#065F46;}
+.sg{background:#FEF3E2;color:#92400E;}
+.sy{background:#FDF2F8;color:#831843;}
+.sm{background:#FEF2F2;color:#991B1B;font-weight:600;}
+.skf{background:#F0FDF4;color:#14532D;}
+.sn{background:#EFF6FF;color:#1E3A8A;}
+
+/* Sidebar */
+.sidebar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;display:flex;flex-direction:column;gap:14px;position:sticky;top:1.5rem;}
+.sb-label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;}
+.sb-row{display:flex;flex-direction:column;gap:0;}
+.sb-item{font-size:12px;color:var(--text2);line-height:1.6;padding:4px 0;display:flex;gap:7px;align-items:flex-start;}
+.sb-item span{flex-shrink:0;font-size:14px;}
+.sb-item-text{flex:1;}
+.sb-item b{color:var(--text);font-weight:600;}
+.sb-note{font-size:11.5px;color:var(--text2);line-height:1.6;padding:10px 12px;background:var(--surface2);border-radius:var(--radius-sm);border-left:3px solid var(--border);}
+.sb-bonus{font-size:11.5px;color:#065F46;line-height:1.6;padding:10px 12px;background:#ECFDF5;border-radius:var(--radius-sm);border-left:3px solid #6EE7B7;}
+.sb-divider{border:none;border-top:1px solid var(--border);}
+.sb-price{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--border);}
+.sb-price:last-child{border-bottom:none;}
+.sb-price-left{}
+.sb-price-label{font-size:12px;color:var(--text);font-weight:500;}
+.sb-price-sub{font-size:10px;color:var(--text3);margin-top:1px;}
+.sb-price-val{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;}
+.sb-price-val.premium{color:#92400E;}
+.sb-btn{display:block;width:100%;padding:11px 16px;border-radius:var(--radius-sm);border:none;background:var(--text);color:#fff;cursor:pointer;font-size:13px;font-weight:600;text-align:center;text-decoration:none;font-family:'Mulish',sans-serif;letter-spacing:0.01em;transition:opacity 0.15s;}
+.sb-btn:hover{opacity:0.85;}
+
+/* Animations */
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.cal-wrap{animation:fadeIn 0.25s ease;}
+.sidebar{animation:fadeIn 0.3s ease;}
 </style>
 </head>
 <body>
-<div class="w">
-<div class="hdr">
-  <div class="title" id="schoolTitle">Исцеление отношений</div>
-  <div class="mnav">
+<div class="page">
+
+<div class="header">
+  <div class="header-left">
+    <div class="school-name" id="schoolName">Исцеление отношений</div>
+    <div class="school-sub">Онлайн-школа психологии · psyteeth.com</div>
+  </div>
+  <div class="month-nav">
     <button onclick="prevM()">←</button>
-    <div class="mlbl" id="mlbl"></div>
+    <div class="month-label" id="mlbl"></div>
     <button onclick="nextM()">→</button>
   </div>
 </div>
+
 <div class="tabs">
   <div class="tab on" onclick="switchTab(0,this)">Исцеление отношений</div>
   <div class="tab" onclick="switchTab(1,this)">Зубное кунг-фу</div>
 </div>
-<div class="leg" id="legend"></div>
+
+<div class="legend" id="legend"></div>
+
 <div class="layout">
-  <div id="calWrap"></div>
+  <div class="cal-wrap"><div class="cal" id="cal"></div></div>
   <div class="sidebar" id="sidebar"></div>
 </div>
-</div>
 
+</div>
 <script>
 const MR=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 let cy=2026,cm=2,mode=0;
@@ -117,37 +142,39 @@ const IO_SCHED={
 };
 
 const IO_LEG=[
-  {c:'#7F77DD',l:'Антон'},{c:'#1D9E75',l:'Таня'},{c:'#BA7517',l:'Гульназ'},{c:'#D4537E',l:'Яна'}
+  {c:'#6366F1',l:'Антон'},{c:'#10B981',l:'Таня'},{c:'#F59E0B',l:'Гульназ'},{c:'#EC4899',l:'Яна'}
 ];
 const ZKF_LEG=[
-  {c:'#639922',l:'Тренировки Зубного кунг-фу'},{c:'#E24B4A',l:'Денежный интенсив (бонус, с 21-го)'},{c:'#378ADD',l:'Работа с маской через контент (бонус, каждые 3 дня)'}
+  {c:'#16A34A',l:'Тренировки Зубного кунг-фу'},
+  {c:'#EF4444',l:'Денежный интенсив (бонус, с 21-го)'},
+  {c:'#3B82F6',l:'Работа с маской (бонус, каждые 3 дня)'}
 ];
 
 const SIDEBAR_IO=`
 <div class="sb-row">
   <div class="sb-label">С чем работаем</div>
-  <div class="sb-item">🧠 <b>Лимбическая система</b> — через саморегуляцию</div>
-  <div class="sb-item">⚔️ <b>Место в иерархии</b> — через стычки с альфа-жертвой</div>
-  <div class="sb-item">🎙️ <b>Всё актуальное</b> — через групповые эфиры</div>
-  <div class="sb-item">🪞 <b>Интеграция отчуждённой части</b> — через созидательные экспозиции</div>
-  <div class="sb-item">💀 <b>Маски и нарц. коллапс</b> — через «Божественный контент»</div>
+  <div class="sb-item"><span>🧠</span><div class="sb-item-text"><b>Лимбическая система</b> — через саморегуляцию</div></div>
+  <div class="sb-item"><span>⚔️</span><div class="sb-item-text"><b>Место в иерархии</b> — через стычки с альфа-жертвой</div></div>
+  <div class="sb-item"><span>🎙️</span><div class="sb-item-text"><b>Всё актуальное</b> — через групповые эфиры</div></div>
+  <div class="sb-item"><span>🪞</span><div class="sb-item-text"><b>Интеграция отчуждённой части</b> — через созидательные экспозиции</div></div>
+  <div class="sb-item"><span>💀</span><div class="sb-item-text"><b>Маски и нарц. коллапс</b> — через «Божественный контент»</div></div>
 </div>
 <hr class="sb-divider">
 <div class="sb-row">
   <div class="sb-label">Что входит</div>
-  <div class="sb-item">🦷 Атаки по зубам, проверка саморегуляций</div>
-  <div class="sb-item">🎙️ 11 групповых эфиров в неделю</div>
-  <div class="sb-item">🧘 Медитация для проработки дискомфорта</div>
-  <div class="sb-item">🌬️ Дыхательная медитация</div>
-  <div class="sb-item">🔒 Бесплатный VPN для всей семьи</div>
+  <div class="sb-item"><span>🦷</span><div class="sb-item-text">Атаки по зубам, проверка саморегуляций</div></div>
+  <div class="sb-item"><span>🎙️</span><div class="sb-item-text">11 групповых эфиров в неделю</div></div>
+  <div class="sb-item"><span>🧘</span><div class="sb-item-text">Медитация для проработки дискомфорта</div></div>
+  <div class="sb-item"><span>🌬️</span><div class="sb-item-text">Дыхательная медитация</div></div>
+  <div class="sb-item"><span>🔒</span><div class="sb-item-text">Бесплатный VPN для всей семьи</div></div>
 </div>
 <hr class="sb-divider">
 <div class="sb-row">
   <div class="sb-label">Стоимость</div>
-  <div class="sb-price"><span class="sb-price-label">1 месяц</span><span class="sb-price-val">15 000 ₽</span></div>
-  <div class="sb-price"><span class="sb-price-label">3 месяца</span><span class="sb-price-val">35 000 ₽</span></div>
-  <div class="sb-price"><span class="sb-price-label">6 месяцев</span><span class="sb-price-val">60 000 ₽</span></div>
-  <div class="sb-price"><span class="sb-price-label">12 месяцев</span><span class="sb-price-val">108 000 ₽</span></div>
+  <div class="sb-price"><div class="sb-price-left"><div class="sb-price-label">1 месяц</div></div><span class="sb-price-val">15 000 ₽</span></div>
+  <div class="sb-price"><div class="sb-price-left"><div class="sb-price-label">3 месяца</div></div><span class="sb-price-val">35 000 ₽</span></div>
+  <div class="sb-price"><div class="sb-price-left"><div class="sb-price-label">6 месяцев</div></div><span class="sb-price-val">60 000 ₽</span></div>
+  <div class="sb-price"><div class="sb-price-left"><div class="sb-price-label">12 месяцев</div></div><span class="sb-price-val">108 000 ₽</span></div>
 </div>
 <hr class="sb-divider">
 <a class="sb-btn" href="https://t.me/psyteeth" target="_blank">Записаться → @psyteeth</a>
@@ -157,29 +184,26 @@ const SIDEBAR_ZKF=`
 <div class="sb-note">Зубное кунг-фу проходится только вместе с Исцелением отношений. Всё, что входит в ИО — входит и сюда, плюс:</div>
 <div class="sb-row">
   <div class="sb-label">Дополнительно</div>
-  <div class="sb-item">💪 5 тренировок в неделю с персональным тренером</div>
-  <div class="sb-item">🎬 Групповые эфиры по созданию контента</div>
-  <div class="sb-item">💀 Групповые эфиры с поддержкой в проживании нарциссического коллапса</div>
+  <div class="sb-item"><span>💪</span><div class="sb-item-text">5 тренировок в неделю с персональным тренером</div></div>
+  <div class="sb-item"><span>🎬</span><div class="sb-item-text">Групповые эфиры по созданию контента</div></div>
+  <div class="sb-item"><span>💀</span><div class="sb-item-text">Групповые эфиры с поддержкой в проживании нарциссического коллапса</div></div>
 </div>
 <hr class="sb-divider">
-<div class="sb-row">
-  <div class="sb-label">Бонусы для участников ЗКФ</div>
-  <div class="sb-bonus">Работа с маской через контент и денежный интенсив проводятся бонусом для всех участников ЗКФ. Можно ходить по желанию.</div>
-</div>
+<div class="sb-bonus">Работа с маской через контент и денежный интенсив — бонус для всех участников ЗКФ. Можно ходить по желанию.</div>
 <hr class="sb-divider">
 <div class="sb-row">
   <div class="sb-label">Стоимость абонемента</div>
   <div class="sb-price">
-    <div><div class="sb-price-label">1 месяц</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div>
+    <div class="sb-price-left"><div class="sb-price-label">1 месяц</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div>
     <span class="sb-price-val">35 000 ₽</span>
   </div>
   <div class="sb-price">
-    <div><div class="sb-price-label">3 месяца</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div>
+    <div class="sb-price-left"><div class="sb-price-label">3 месяца</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div>
     <span class="sb-price-val">95 000 ₽</span>
   </div>
   <div class="sb-price">
-    <div><div class="sb-price-label">3 месяца</div><div class="sb-price-sub">⚡ Антон Казаков</div></div>
-    <span class="sb-price-val big">500 000 ₽</span>
+    <div class="sb-price-left"><div class="sb-price-label">3 месяца</div><div class="sb-price-sub">⚡ Антон Казаков</div></div>
+    <span class="sb-price-val premium">500 000 ₽</span>
   </div>
 </div>
 <hr class="sb-divider">
@@ -207,7 +231,7 @@ function switchTab(t,el){
   mode=t;
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
   el.classList.add('on');
-  document.getElementById('schoolTitle').textContent=t===0?'Исцеление отношений':'Зубное кунг-фу';
+  document.getElementById('schoolName').textContent=t===0?'Исцеление отношений':'Зубное кунг-фу';
   render();
 }
 
@@ -219,7 +243,7 @@ function render(){
 }
 
 function renderCal(){
-  const wrap=document.getElementById('calWrap');
+  const cal=document.getElementById('cal');
   const last=new Date(cy,cm+1,0).getDate();
   const today=new Date();
   const todayD=(today.getFullYear()===cy&&today.getMonth()===cm)?today.getDate():-1;
@@ -229,7 +253,7 @@ function renderCal(){
   const startOffset=COL_DOWS.indexOf(firstDow);
   const totalCells=Math.ceil((startOffset+last)/7)*7;
 
-  let html=`<div class="cal">`;
+  let html='';
   DAY_NAMES.forEach(n=>{html+=`<div class="ch">${n}</div>`;});
 
   for(let cell=0;cell<totalCells;cell++){
@@ -242,8 +266,8 @@ function renderCal(){
     if(date<1||date>last){html+=`<div class="c empty"></div>`;continue;}
 
     const isToday=date===todayD;
-    const classes=['c',isToday?'tod':'',isWeekend&&!isToday?'weekend':''].filter(Boolean).join(' ');
-    html+=`<div class="${classes}"><div class="dn">${date}</div>`;
+    const cls=['c',isToday?'tod':'',isWeekend&&!isToday?'weekend':''].filter(Boolean).join(' ');
+    html+=`<div class="${cls}"><div class="dn">${date}</div>`;
 
     if(mode===0){
       (IO_SCHED[dow]||[]).forEach(s=>{html+=`<div class="slot ${s.cls}">${s.lbl}</div>`;});
@@ -254,8 +278,7 @@ function renderCal(){
     }
     html+=`</div>`;
   }
-  html+=`</div>`;
-  wrap.innerHTML=html;
+  cal.innerHTML=html;
 }
 
 function prevM(){cm--;if(cm<0){cm=11;cy--;}render();}
