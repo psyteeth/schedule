@@ -127,9 +127,15 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="month-label" id="mlbl"></div>
       <button onclick="nextM()">→</button>
     </div>
-    <div class="tabs" style="margin-bottom:0;">
-      <div class="tab on" onclick="switchTab(0,this)">Исцеление отношений</div>
-      <div class="tab" onclick="switchTab(1,this)">Зубное кунг-фу</div>
+    <div style="display:flex;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:5px;flex-shrink:0;" class="tabs" id="mainTabs">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+        <div style="font-size:9px;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;padding:0 4px;">Базовая программа</div>
+        <div class="tab on" onclick="switchTab(0,this)" style="width:100%;">Исцеление отношений</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+        <div style="font-size:9px;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;padding:0 4px;">Продвинутый уровень</div>
+        <div class="tab" onclick="switchTab(1,this)" style="width:100%;">Зубное кунг-фу</div>
+      </div>
     </div>
   </div>
 </div>
@@ -313,7 +319,7 @@ function maskDays(y,m){const res=new Set();const last=new Date(y,m+1,0).getDate(
 
 function switchTab(t,el){
   mode=t;
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('#mainTabs .tab').forEach(x=>x.classList.remove('on'));
   el.classList.add('on');
   render();
 }
