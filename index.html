@@ -4,50 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Расписание школы</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;500;600&family=Unbounded:wght@400;600;900&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 :root{
-  --bg:#F7F5F2;
-  --surface:#FFFFFF;
-  --surface2:#F0EDE8;
-  --border:#E8E4DE;
-  --text:#1C1A18;
-  --text2:#6B6560;
-  --text3:#A8A29C;
-  --accent:#2D5016;
-  --accent2:#8B4513;
-  --radius:12px;
-  --radius-sm:8px;
+  --bg:#F7F5F2;--surface:#FFFFFF;--surface2:#F0EDE8;--border:#E8E4DE;
+  --text:#1C1A18;--text2:#6B6560;--text3:#A8A29C;
+  --radius:12px;--radius-sm:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-
 .page{max-width:1200px;margin:0 auto;padding:2rem 1.5rem;}
-
-/* Header */
 .header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2rem;gap:1rem;}
-.header-left{}
-.school-name{font-family:'Playfair Display',serif;font-size:28px;font-weight:600;color:var(--text);letter-spacing:-0.02em;line-height:1.2;}
+.school-name{font-family:'Playfair Display',serif;font-size:28px;font-weight:600;letter-spacing:-0.02em;line-height:1.2;}
 .school-sub{font-size:13px;color:var(--text3);margin-top:4px;font-weight:300;letter-spacing:0.03em;}
 .month-nav{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 16px;}
 .month-nav button{background:none;border:none;cursor:pointer;font-size:16px;color:var(--text2);padding:2px 6px;border-radius:6px;transition:background 0.15s;}
 .month-nav button:hover{background:var(--surface2);}
-.month-label{font-family:'Playfair Display',serif;font-size:15px;font-weight:500;min-width:120px;text-align:center;color:var(--text);}
-
-/* Tabs */
+.month-label{font-family:'Playfair Display',serif;font-size:15px;font-weight:500;min-width:120px;text-align:center;}
 .tabs{display:flex;gap:6px;margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:5px;width:fit-content;}
 .tab{padding:7px 18px;border-radius:var(--radius-sm);cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all 0.2s;border:none;background:none;}
 .tab.on{background:var(--text);color:#fff;box-shadow:0 2px 8px rgba(28,26,24,0.15);}
-
-/* Legend */
 .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:1.5rem;}
-.li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);font-weight:400;}
+.li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);}
 .ld{width:8px;height:8px;border-radius:50%;}
-
-/* Layout */
 .layout{display:grid;grid-template-columns:1fr 240px;gap:20px;align-items:start;}
-
-/* Calendar */
 .cal-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
 .cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));}
 .ch{background:var(--surface2);padding:10px 8px;text-align:center;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;border-bottom:1px solid var(--border);}
@@ -59,11 +40,8 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
 .dn{font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;}
 .weekend .dn{color:var(--text2);}
 .slot{border-radius:5px;padding:3px 6px;margin-bottom:3px;font-size:10px;font-weight:500;line-height:1.4;}
-.tod{background:#F0F7FF!important;}
+.tod{background:#F0F7FF!important;outline:2px solid #378ADD;outline-offset:-2px;border-radius:0;}
 .tod .dn{color:#1A5FA8;font-weight:700;}
-.tod{outline:2px solid #378ADD;outline-offset:-2px;border-radius:0;}
-
-/* Slot colors - warm, refined palette */
 .sa{background:#EEF0FF;color:#3730A3;}
 .st{background:#ECFDF5;color:#065F46;}
 .sg{background:#FEF3E2;color:#92400E;}
@@ -71,8 +49,6 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
 .sm{background:#FEF2F2;color:#991B1B;font-weight:600;}
 .skf{background:#F0FDF4;color:#14532D;}
 .sn{background:#EFF6FF;color:#1E3A8A;}
-
-/* Sidebar */
 .sidebar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;display:flex;flex-direction:column;gap:14px;position:sticky;top:1.5rem;}
 .sb-label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;}
 .sb-row{display:flex;flex-direction:column;gap:0;}
@@ -85,23 +61,58 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
 .sb-divider{border:none;border-top:1px solid var(--border);}
 .sb-price{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--border);}
 .sb-price:last-child{border-bottom:none;}
-.sb-price-left{}
 .sb-price-label{font-size:12px;color:var(--text);font-weight:500;}
 .sb-price-sub{font-size:10px;color:var(--text3);margin-top:1px;}
 .sb-price-val{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;}
-
-.sb-btn{display:block;width:100%;padding:11px 16px;border-radius:var(--radius-sm);border:none;background:var(--text);color:#fff;cursor:pointer;font-size:13px;font-weight:600;text-align:center;text-decoration:none;font-family:'Mulish',sans-serif;letter-spacing:0.01em;transition:opacity 0.15s;}
+.sb-btn{display:block;width:100%;padding:11px 16px;border-radius:var(--radius-sm);border:none;background:var(--text);color:#fff;cursor:pointer;font-size:12px;font-weight:600;text-align:center;text-decoration:none;font-family:'Mulish',sans-serif;letter-spacing:0.01em;transition:opacity 0.15s;}
 .sb-btn:hover{opacity:0.85;}
-
-/* Animations */
+.sb-btn-outline{background:none;border:1.5px solid var(--border);color:var(--text2);}
+.sb-btn-outline:hover{border-color:var(--text);color:var(--text);opacity:1;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
 .cal-wrap{animation:fadeIn 0.25s ease;}
 .sidebar{animation:fadeIn 0.3s ease;}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(28,26,24,0.6);z-index:1000;overflow-y:auto;padding:2rem 1rem;}
+.modal-overlay.open{display:flex;align-items:flex-start;justify-content:center;}
+.modal{background:var(--surface);border-radius:20px;max-width:900px;width:100%;margin:auto;overflow:hidden;position:relative;animation:fadeIn 0.2s ease;}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--surface2);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:16px;color:var(--text2);display:flex;align-items:center;justify-content:center;z-index:10;transition:background 0.15s;}
+.modal-close:hover{background:var(--border);}
+.modal-inner{padding:2rem;}
+.modal-header{text-align:center;margin-bottom:1.5rem;}
+.modal-title{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;letter-spacing:-0.02em;margin-bottom:6px;}
+.modal-sub{font-size:12px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;}
+.trainer-tabs{display:flex;justify-content:center;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.ttab{display:flex;align-items:center;gap:7px;padding:7px 16px;border-radius:40px;border:1.5px solid var(--border);background:none;color:var(--text2);cursor:pointer;font-family:'Geologica',sans-serif;font-size:13px;font-weight:500;transition:all .2s;}
+.ttab:hover{border-color:#aaa;color:var(--text);}
+.ttab.active{border-color:var(--tacc);color:var(--tacc);background:color-mix(in srgb,var(--tacc) 8%,transparent);}
+.tdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.trainer-layout{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start;}
+@media(max-width:640px){.trainer-layout{grid-template-columns:1fr;}.layout{grid-template-columns:1fr;}}
+.tcard{background:var(--surface2);border-radius:16px;padding:24px;position:relative;overflow:hidden;}
+.tcard::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--tacc);}
+.tavatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;margin-bottom:12px;}
+.thandle{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.tbadge{display:inline-block;font-size:10px;letter-spacing:0.07em;text-transform:uppercase;padding:3px 10px;border-radius:40px;border:1px solid var(--tacc);color:var(--tacc);background:color-mix(in srgb,var(--tacc) 8%,transparent);margin-bottom:12px;font-weight:500;}
+.tname{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:600;letter-spacing:-0.02em;margin-bottom:10px;line-height:1.3;}
+.tdesc{font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:20px;}
+.tbars-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;}
+.tbars{display:flex;flex-direction:column;gap:8px;}
+.tbar-row{display:flex;align-items:center;gap:10px;}
+.tbar-name{font-size:12px;color:var(--text2);width:110px;flex-shrink:0;}
+.tbar-track{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.tbar-fill{height:100%;border-radius:2px;}
+.tbar-val{font-size:12px;font-weight:500;width:28px;text-align:right;flex-shrink:0;}
+.radar-wrap{background:var(--surface2);border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center;}
+.radar-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;align-self:flex-start;}
+.tprice{font-size:12px;color:var(--text3);text-align:center;margin-top:12px;}
+.tcta{display:block;text-align:center;margin-top:1rem;}
+.tcta a{display:inline-block;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:#fff;background:var(--text);padding:12px 28px;border-radius:40px;text-decoration:none;transition:opacity .2s;}
+.tcta a:hover{opacity:0.8;}
 </style>
 </head>
 <body>
 <div class="page">
-
 <div class="header">
   <div class="header-left">
     <div class="school-name" id="schoolName">Психостоматология №1</div>
@@ -114,20 +125,40 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
     <button onclick="nextM()">→</button>
   </div>
 </div>
-
 <div class="tabs">
   <div class="tab on" onclick="switchTab(0,this)">Исцеление отношений</div>
   <div class="tab" onclick="switchTab(1,this)">Зубное кунг-фу</div>
 </div>
-
 <div class="legend" id="legend"></div>
-
 <div class="layout">
   <div class="cal-wrap"><div class="cal" id="cal"></div></div>
   <div class="sidebar" id="sidebar"></div>
 </div>
-
 </div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-inner">
+      <div class="modal-header">
+        <div class="modal-title">Зубное Кунг-фу</div>
+        <div class="modal-sub">Тёмная и светлая триада · Профили тренеров</div>
+      </div>
+      <div class="trainer-tabs" id="trainerTabs"></div>
+      <div class="trainer-layout">
+        <div class="tcard" id="tcard"></div>
+        <div class="radar-wrap">
+          <div class="radar-label">Профиль триады</div>
+          <canvas id="radarChart"></canvas>
+          <div class="tprice" id="tprice"></div>
+        </div>
+      </div>
+      <div class="tcta"><a id="tctaBtn" href="#" target="_blank">Записаться</a></div>
+    </div>
+  </div>
+</div>
+
 <script>
 const MR=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 let cy=2026,cm=2,mode=0;
@@ -142,14 +173,8 @@ const IO_SCHED={
   0:[{cls:'sy',lbl:'Яна 11:00–12:00'}]
 };
 
-const IO_LEG=[
-  {c:'#6366F1',l:'Антон'},{c:'#10B981',l:'Таня'},{c:'#F59E0B',l:'Гульназ'},{c:'#EC4899',l:'Яна'}
-];
-const ZKF_LEG=[
-  {c:'#16A34A',l:'Тренировки Зубного кунг-фу'},
-  {c:'#EF4444',l:'Денежный интенсив (бонус, с 21-го)'},
-  {c:'#3B82F6',l:'Работа с маской (бонус, каждые 3 дня)'}
-];
+const IO_LEG=[{c:'#6366F1',l:'Антон'},{c:'#10B981',l:'Таня'},{c:'#F59E0B',l:'Гульназ'},{c:'#EC4899',l:'Яна'}];
+const ZKF_LEG=[{c:'#16A34A',l:'Тренировки Зубного кунг-фу'},{c:'#EF4444',l:'Денежный интенсив (бонус, с 21-го)'},{c:'#3B82F6',l:'Работа с маской (бонус, каждые 3 дня)'}];
 
 const SIDEBAR_IO=`
 <div class="sb-row">
@@ -170,13 +195,13 @@ const SIDEBAR_IO=`
 <hr class="sb-divider">
 <div class="sb-row">
   <div class="sb-label">Стоимость абонемента Исцеление отношений</div>
-  <div class="sb-price"><div class="sb-price-left"><div class="sb-price-label">1 месяц</div></div><span class="sb-price-val">15 000 ₽</span></div>
-  <div class="sb-price"><div class="sb-price-left"><div class="sb-price-label">3 месяца</div></div><span class="sb-price-val">35 000 ₽</span></div>
-  <div class="sb-price"><div class="sb-price-left"><div class="sb-price-label">6 месяцев</div></div><span class="sb-price-val">60 000 ₽</span></div>
-  <div class="sb-price"><div class="sb-price-left"><div class="sb-price-label">12 месяцев</div></div><span class="sb-price-val">108 000 ₽</span></div>
+  <div class="sb-price"><div><div class="sb-price-label">1 месяц</div></div><span class="sb-price-val">15 000 ₽</span></div>
+  <div class="sb-price"><div><div class="sb-price-label">3 месяца</div></div><span class="sb-price-val">35 000 ₽</span></div>
+  <div class="sb-price"><div><div class="sb-price-label">6 месяцев</div></div><span class="sb-price-val">60 000 ₽</span></div>
+  <div class="sb-price"><div><div class="sb-price-label">12 месяцев</div></div><span class="sb-price-val">108 000 ₽</span></div>
 </div>
 <hr class="sb-divider">
-<a class="sb-btn" href="https://t.me/psyteeth" target="_blank">Записаться → @psyteeth</a>
+<a class="sb-btn" href="https://t.me/psyteeth" target="_blank">Записаться на бесплатную диагностику по зубу → @psyteeth</a>
 `;
 
 const SIDEBAR_ZKF=`
@@ -195,35 +220,91 @@ const SIDEBAR_ZKF=`
 <hr class="sb-divider">
 <div class="sb-row">
   <div class="sb-label">Стоимость абонемента Исцеление отношений + Зубное кунг-фу</div>
-  <div class="sb-price">
-    <div class="sb-price-left"><div class="sb-price-label">1 месяц</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div>
-    <span class="sb-price-val">35 000 ₽</span>
-  </div>
-  <div class="sb-price">
-    <div class="sb-price-left"><div class="sb-price-label">3 месяца</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div>
-    <span class="sb-price-val">95 000 ₽</span>
-  </div>
+  <div class="sb-price"><div><div class="sb-price-label">1 месяц</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div><span class="sb-price-val">35 000 ₽</span></div>
+  <div class="sb-price"><div><div class="sb-price-label">3 месяца</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div><span class="sb-price-val">95 000 ₽</span></div>
 </div>
 <hr class="sb-divider">
-<a class="sb-btn" href="https://t.me/psyteeth" target="_blank">Записаться → @psyteeth</a>
+<button class="sb-btn sb-btn-outline" onclick="openModal()">Подробнее про тренеров</button>
+<a class="sb-btn" href="https://t.me/psyteeth" target="_blank" style="margin-top:6px;">Записаться → @psyteeth</a>
 `;
 
+// Trainer data
+const TRAINERS=[
+  {handle:"@Tatyana_Dynnikova",tg:"https://t.me/Tatyana_Dynnikova",full:"Таня Дынникова",acc:"#534AB7",avBg:"#EEEDFE",avFg:"#3C3489",ini:"ТД",name:"Добрая опора",kf:"ясли",price:"от 35 000 ₽/месяц",emoji:"⚖️",desc:"Забота превыше всего. Не давит, не манипулирует — просто отбитая заботушка. Первая точка входа: идеальный вариант для детей и тех, кто не готов к серьёзным нагрузкам.",s:{"Манипуляции":1.4,"Нарциссизм":2.7,"Психопатия":1.7,"Вера в людей":3.5,"Гуманизм":4.0,"Забота":4.0}},
+  {handle:"@kazakovaw",tg:"https://t.me/kazakovaw",full:"Гульназ Казакова",acc:"#1D9E75",avBg:"#E1F5EE",avFg:"#085041",ini:"ГК",name:"Архитектор Влияния",kf:"в близость",price:"от 35 000 ₽/месяц",emoji:"🕸️",desc:"Внебрачная пра-пра-правнучка Макиавелли. Видит все манипуляции насквозь. Раскладывает все по полочкам. Прокачивает по всем фронтам: секс, отношения, близость, реализация и татарские пироги.",s:{"Манипуляции":3.7,"Нарциссизм":2.4,"Психопатия":2.4,"Вера в людей":2.5,"Гуманизм":2.8,"Забота":3.0}},
+  {handle:"@YanaPanchenk0",tg:"https://t.me/YanaPanchenk0",full:"Яна Панченко",acc:"#993556",avBg:"#FBEAF0",avFg:"#72243E",ini:"ЯП",name:"Нарцисс с Душой",kf:"позволь себе",price:"от 35 000 ₽/месяц",emoji:"🌹",desc:"Нарциссизм + высокий гуманизм + свобода от долга привели её сначала в порно, а затем и в психологию. Яркая, самодостаточная, знает, как получать удовольствие, и при этом искренне любит людей. Умеет блистать и помогать одновременно.",s:{"Манипуляции":2.3,"Нарциссизм":3.0,"Психопатия":3.1,"Вера в людей":3.0,"Гуманизм":4.5,"Забота":2.5}},
+  {handle:"@happinessguy",tg:"https://t.me/happinessguy",full:"Антон Казаков",acc:"#BA7517",avBg:"#FAEEDA",avFg:"#633806",ini:"АК",name:"Главный психопат",kf:"бесславные психопаты",price:"500 000 ₽ / 3 месяца",emoji:"⚡",desc:"Твой Оби-Ван на Пути Героя, твой [капитан] Джек Воробей в море неопределённости. Не избегает страхов. Стыд его не останавливает, вина не парализует. Берёт в работу по договорённости.",s:{"Манипуляции":2.7,"Нарциссизм":2.7,"Психопатия":3.8,"Вера в людей":4.0,"Гуманизм":4.3,"Забота":3.5}}
+];
+
+const LABELS=Object.keys(TRAINERS[0].s);
+let curTrainer=0,radarChart=null;
+
+function openModal(){
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  if(!document.getElementById('trainerTabs').children.length) buildTrainerTabs();
+  selectTrainer(curTrainer);
+}
+function closeModal(e){if(e.target===document.getElementById('modalOverlay'))closeModalDirect();}
+function closeModalDirect(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+
+function buildTrainerTabs(){
+  const el=document.getElementById('trainerTabs');
+  TRAINERS.forEach((p,i)=>{
+    const btn=document.createElement('button');
+    btn.className='ttab'+(i===curTrainer?' active':'');
+    btn.style.setProperty('--tacc',p.acc);
+    btn.innerHTML=`<span class="tdot" style="background:${p.acc}"></span>${p.full.split(' ')[0]}`;
+    btn.onclick=()=>selectTrainer(i);
+    el.appendChild(btn);
+  });
+}
+
+function selectTrainer(i){
+  curTrainer=i;
+  const p=TRAINERS[i];
+  document.querySelectorAll('.ttab').forEach((t,j)=>{
+    t.classList.toggle('active',j===i);
+  });
+  const card=document.getElementById('tcard');
+  card.style.setProperty('--tacc',p.acc);
+  card.innerHTML=`
+    <div class="tavatar" style="background:${p.avBg};color:${p.avFg}">${p.ini}</div>
+    <div class="thandle">${p.handle}</div>
+    <div class="tbadge">зубное кунг-фу: ${p.kf}</div>
+    <div class="tname">${p.emoji} ${p.name}</div>
+    <div class="tdesc">${p.desc}</div>
+    <div class="tbars-label">Показатели</div>
+    <div class="tbars">${LABELS.map(l=>`
+      <div class="tbar-row">
+        <span class="tbar-name">${l}</span>
+        <div class="tbar-track"><div class="tbar-fill" style="width:${(p.s[l]/5)*100}%;background:${p.acc}"></div></div>
+        <span class="tbar-val">${p.s[l]}</span>
+      </div>`).join('')}
+    </div>`;
+
+  document.getElementById('tprice').textContent=p.price;
+  const ctaBtn=document.getElementById('tctaBtn');
+  ctaBtn.href=p.tg;
+  ctaBtn.textContent=`Записаться → ${p.handle}`;
+
+  const canvas=document.getElementById('radarChart');
+  const wrap=canvas.parentElement;
+  const size=Math.min(wrap.offsetWidth-40,280);
+  canvas.width=size;canvas.height=size;
+  const ctx=canvas.getContext('2d');
+  if(radarChart)radarChart.destroy();
+  radarChart=new Chart(ctx,{type:'radar',data:{labels:LABELS,datasets:[{data:LABELS.map(l=>p.s[l]),backgroundColor:p.acc+'18',borderColor:p.acc,borderWidth:2,pointBackgroundColor:p.acc,pointBorderColor:'#fff',pointBorderWidth:1.5,pointRadius:4}]},options:{responsive:false,layout:{padding:{top:16,bottom:16,left:16,right:16}},plugins:{legend:{display:false}},scales:{r:{min:0,max:5,ticks:{display:false,stepSize:1},grid:{color:'rgba(0,0,0,0.06)'},angleLines:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10,family:"'Geologica',sans-serif"},color:'#9a9790',padding:10}}}}});
+}
+
+// Calendar
 const DAY_NAMES=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 const COL_DOWS=[1,2,3,4,5,6,0];
 const WEEKENDS=new Set([6,0]);
 const WEEKDAYS=new Set([1,2,3,4,5]);
 
-function moneyDays(y,m){
-  const res=new Set();
-  for(let i=0;i<8;i++){const d=new Date(y,m,21+i);if(d.getMonth()===m)res.add(d.getDate());}
-  return res;
-}
-function maskDays(y,m){
-  const res=new Set();
-  const last=new Date(y,m+1,0).getDate();
-  for(let d=1;d<=last;d+=3)res.add(d);
-  return res;
-}
+function moneyDays(y,m){const res=new Set();for(let i=0;i<8;i++){const d=new Date(y,m,21+i);if(d.getMonth()===m)res.add(d.getDate());}return res;}
+function maskDays(y,m){const res=new Set();const last=new Date(y,m+1,0).getDate();for(let d=1;d<=last;d+=3)res.add(d);return res;}
 
 function switchTab(t,el){
   mode=t;
@@ -250,23 +331,15 @@ function renderCal(){
   const firstDow=new Date(cy,cm,1).getDay();
   const startOffset=COL_DOWS.indexOf(firstDow);
   const totalCells=Math.ceil((startOffset+last)/7)*7;
-
   let html='';
   DAY_NAMES.forEach(n=>{html+=`<div class="ch">${n}</div>`;});
-
   for(let cell=0;cell<totalCells;cell++){
-    const col=cell%7;
-    const dow=COL_DOWS[col];
-    const date=cell-startOffset+1;
-    const isWeekend=WEEKENDS.has(dow);
-    const isWeekday=WEEKDAYS.has(dow);
-
+    const col=cell%7,dow=COL_DOWS[col],date=cell-startOffset+1;
+    const isWeekend=WEEKENDS.has(dow),isWeekday=WEEKDAYS.has(dow);
     if(date<1||date>last){html+=`<div class="c empty"></div>`;continue;}
-
     const isToday=date===todayD;
     const cls=['c',isToday?'tod':'',isWeekend&&!isToday?'weekend':''].filter(Boolean).join(' ');
     html+=`<div class="${cls}"><div class="dn">${date}</div>`;
-
     if(mode===0){
       (IO_SCHED[dow]||[]).forEach(s=>{html+=`<div class="slot ${s.cls}">${s.lbl}</div>`;});
     } else {
