@@ -151,7 +151,7 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
   </div>
 </div>
-<div class="school-tag" style="margin-bottom:0.75rem;">Расписание групповых эфиров</div>
+<div class="school-tag" id="scheduleTag" style="margin-bottom:0.75rem;">Расписание групповых эфиров</div>
 <div class="legend" id="legend"></div>
 <div class="layout">
   <div class="cal-wrap"><div class="cal" id="cal"></div></div>
@@ -341,6 +341,7 @@ function switchTab(t,el){
 
 function render(){
   document.getElementById('mlbl').textContent=MR[cm]+' '+cy;
+  document.getElementById('scheduleTag').textContent=mode===0?'Расписание групповых эфиров':'Расписание активностей';
   document.getElementById('legend').innerHTML=(mode===0?IO_LEG:ZKF_LEG).map(x=>`<div class="li"><div class="ld" style="background:${x.c}"></div>${x.l}</div>`).join('');
   document.getElementById('sidebar').innerHTML=mode===0?SIDEBAR_IO:SIDEBAR_ZKF;
   renderCal();
