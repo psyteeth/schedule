@@ -269,7 +269,8 @@ function openModal(){
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow='hidden';
   if(!document.getElementById('trainerTabs').children.length) buildTrainerTabs();
-  selectTrainer(curTrainer);
+  const randomIdx=Math.floor(Math.random()*TRAINERS.length);
+  selectTrainer(randomIdx);
 }
 function closeModal(e){if(e.target===document.getElementById('modalOverlay'))closeModalDirect();}
 function closeModalDirect(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
