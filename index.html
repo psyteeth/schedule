@@ -30,10 +30,8 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
 }
 .school-name{font-family:'Playfair Display',serif;font-size:42px;font-weight:600;letter-spacing:-0.03em;line-height:1.05;}
 .school-sub{font-size:12px;color:var(--text3);margin-top:6px;font-weight:300;letter-spacing:0.02em;}
-.month-nav{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 16px;flex-shrink:0;}
-.month-nav button{background:none;border:none;cursor:pointer;font-size:16px;color:var(--text2);padding:2px 6px;border-radius:6px;transition:background 0.15s;}
-.month-nav button:hover{background:var(--surface2);}
-.month-label{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;min-width:130px;text-align:center;}
+.month-nav{display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 16px;flex-shrink:0;}
+.month-label{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;text-align:center;}
 .tabs{display:flex;gap:6px;margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:5px;width:fit-content;flex-shrink:0;}
 .tab{padding:7px 18px;border-radius:var(--radius-sm);cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all 0.2s;border:none;background:none;}
 .tab.on{background:var(--text);color:#fff;box-shadow:0 2px 8px rgba(28,26,24,0.15);}
@@ -133,9 +131,7 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
   </div>
   <div class="header-right">
     <div class="month-nav">
-      <button onclick="prevM()">←</button>
       <div class="month-label" id="mlbl"></div>
-      <button onclick="nextM()">→</button>
     </div>
     <div style="display:flex;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:5px;flex-shrink:0;" class="tabs" id="mainTabs">
       <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
@@ -181,7 +177,8 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
 
 <script>
 const MR=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-let cy=2026,cm=2,mode=0;
+const _now=new Date();
+let cy=_now.getFullYear(),cm=_now.getMonth(),mode=0;
 
 const IO_SCHED={
   1:[{cls:'st',lbl:'Таня 10:00–11:00'}],
@@ -372,8 +369,6 @@ function renderCal(){
   cal.innerHTML=html;
 }
 
-function prevM(){cm--;if(cm<0){cm=11;cy--;}render();}
-function nextM(){cm++;if(cm>11){cm=0;cy++;}render();}
 render();
 </script>
 </body>
