@@ -89,7 +89,7 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
 .sb-price-label{font-size:12px;color:var(--text);font-weight:500;}
 .sb-price-sub{font-size:10px;color:var(--text3);margin-top:1px;}
 .sb-price-val{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;}
-.sb-price-val.premium{color:#92400E;}
+
 .sb-btn{display:block;width:100%;padding:11px 16px;border-radius:var(--radius-sm);border:none;background:var(--text);color:#fff;cursor:pointer;font-size:13px;font-weight:600;text-align:center;text-decoration:none;font-family:'Mulish',sans-serif;letter-spacing:0.01em;transition:opacity 0.15s;}
 .sb-btn:hover{opacity:0.85;}
 
@@ -104,8 +104,9 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
 
 <div class="header">
   <div class="header-left">
-    <div class="school-name" id="schoolName">Исцеление отношений</div>
-    <div class="school-sub">Онлайн-школа психологии · psyteeth.com</div>
+    <div class="school-name" id="schoolName">Психостоматология №1</div>
+    <div class="school-sub">Онлайн-пространство для работы с зубами и отношениями</div>
+    <div class="school-sub" style="margin-top:2px;">psyteeth.ru · психостоматология.рф · psyteeth.com</div>
   </div>
   <div class="month-nav">
     <button onclick="prevM()">←</button>
@@ -152,16 +153,14 @@ const ZKF_LEG=[
 
 const SIDEBAR_IO=`
 <div class="sb-row">
-  <div class="sb-label">С чем работаем</div>
+  <div class="sb-label">Через что работаем</div>
   <div class="sb-item"><span>🧠</span><div class="sb-item-text"><b>Лимбическая система</b> — через саморегуляцию</div></div>
-  <div class="sb-item"><span>⚔️</span><div class="sb-item-text"><b>Место в иерархии</b> — через стычки с альфа-жертвой</div></div>
-  <div class="sb-item"><span>🎙️</span><div class="sb-item-text"><b>Всё актуальное</b> — через групповые эфиры</div></div>
-  <div class="sb-item"><span>🪞</span><div class="sb-item-text"><b>Интеграция отчуждённой части</b> — через созидательные экспозиции</div></div>
-  <div class="sb-item"><span>💀</span><div class="sb-item-text"><b>Маски и нарц. коллапс</b> — через «Божественный контент»</div></div>
+  <div class="sb-item"><span>⚔️</span><div class="sb-item-text"><b>Место в иерархии</b> — через стычки с идеализируемой альфа-жертвой</div></div>
+  <div class="sb-item"><span>🎙️</span><div class="sb-item-text"><b>Разбор актуальных запросов</b> — через групповые эфиры</div></div>
 </div>
 <hr class="sb-divider">
 <div class="sb-row">
-  <div class="sb-label">Что входит</div>
+  <div class="sb-label">Что входит в месячный абонемент</div>
   <div class="sb-item"><span>🦷</span><div class="sb-item-text">Атаки по зубам, проверка саморегуляций</div></div>
   <div class="sb-item"><span>🎙️</span><div class="sb-item-text">11 групповых эфиров в неделю</div></div>
   <div class="sb-item"><span>🧘</span><div class="sb-item-text">Медитация для проработки дискомфорта</div></div>
@@ -170,7 +169,7 @@ const SIDEBAR_IO=`
 </div>
 <hr class="sb-divider">
 <div class="sb-row">
-  <div class="sb-label">Стоимость</div>
+  <div class="sb-label">Стоимость абонемента Исцеление отношений</div>
   <div class="sb-price"><div class="sb-price-left"><div class="sb-price-label">1 месяц</div></div><span class="sb-price-val">15 000 ₽</span></div>
   <div class="sb-price"><div class="sb-price-left"><div class="sb-price-label">3 месяца</div></div><span class="sb-price-val">35 000 ₽</span></div>
   <div class="sb-price"><div class="sb-price-left"><div class="sb-price-label">6 месяцев</div></div><span class="sb-price-val">60 000 ₽</span></div>
@@ -181,18 +180,21 @@ const SIDEBAR_IO=`
 `;
 
 const SIDEBAR_ZKF=`
-<div class="sb-note">Зубное кунг-фу проходится только вместе с Исцелением отношений. Всё, что входит в ИО — входит и сюда, плюс:</div>
+<div class="sb-note">Зубное кунг-фу проводится только вместе с Исцелением отношений. С зубами работаем теми же инструментами, плюс:</div>
 <div class="sb-row">
   <div class="sb-label">Дополнительно</div>
-  <div class="sb-item"><span>💪</span><div class="sb-item-text">5 тренировок в неделю с персональным тренером</div></div>
-  <div class="sb-item"><span>🎬</span><div class="sb-item-text">Групповые эфиры по созданию контента</div></div>
-  <div class="sb-item"><span>💀</span><div class="sb-item-text">Групповые эфиры с поддержкой в проживании нарциссического коллапса</div></div>
+  <div class="sb-item"><span>💪</span><div class="sb-item-text">5 тренировок в неделю с персональным тренером, чтобы пройти свой Путь Героя по зубу и отношениям</div></div>
 </div>
 <hr class="sb-divider">
-<div class="sb-bonus">Работа с маской через контент и денежный интенсив — бонус для всех участников ЗКФ. Можно ходить по желанию.</div>
+<div class="sb-row">
+  <div class="sb-label">Бонусные ежемесячные программы</div>
+  <div class="sb-item"><span>💰</span><div class="sb-item-text">Денежный интенсив (4+4 дня)</div></div>
+  <div class="sb-item"><span>🎬</span><div class="sb-item-text">Групповые эфиры по живому контенту и челленджи</div></div>
+  <div class="sb-item"><span>💀</span><div class="sb-item-text">Групповые эфиры с поддержкой на Пути Героя в процессе нарциссического коллапса (смерти маски) и возрождения самости</div></div>
+</div>
 <hr class="sb-divider">
 <div class="sb-row">
-  <div class="sb-label">Стоимость абонемента</div>
+  <div class="sb-label">Стоимость абонемента Исцеление отношений + Зубное кунг-фу</div>
   <div class="sb-price">
     <div class="sb-price-left"><div class="sb-price-label">1 месяц</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div>
     <span class="sb-price-val">35 000 ₽</span>
@@ -200,10 +202,6 @@ const SIDEBAR_ZKF=`
   <div class="sb-price">
     <div class="sb-price-left"><div class="sb-price-label">3 месяца</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div>
     <span class="sb-price-val">95 000 ₽</span>
-  </div>
-  <div class="sb-price">
-    <div class="sb-price-left"><div class="sb-price-label">3 месяца</div><div class="sb-price-sub">⚡ Антон Казаков</div></div>
-    <span class="sb-price-val premium">500 000 ₽</span>
   </div>
 </div>
 <hr class="sb-divider">
