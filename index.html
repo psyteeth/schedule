@@ -198,7 +198,7 @@ const IO_SCHED={
 };
 
 const IO_LEG=[{c:'#6366F1',l:'Антон'},{c:'#10B981',l:'Таня'},{c:'#F59E0B',l:'Гульназ'},{c:'#EC4899',l:'Яна'}];
-const ZKF_LEG=[{c:'#16A34A',l:'Тренировки Зубного кунг-фу'},{c:'#EF4444',l:'Денежный интенсив (бонус, с 21-го)'},{c:'#3B82F6',l:'Работа с маской (бонус, каждые 3 дня)'}];
+const ZKF_LEG=[{c:'#16A34A',l:'Тренировки Зубного кунг-фу'},{c:'#BA7517',l:'Групповая тренировка (ср, 09:00–10:00)'},{c:'#EF4444',l:'Денежный интенсив (бонус, с 21-го)'},{c:'#3B82F6',l:'Работа с маской (бонус, каждые 3 дня)'}];
 
 const SIDEBAR_IO=`
 <div class="sb-row">
@@ -242,6 +242,7 @@ const SIDEBAR_ZKF=`
 <div class="sb-row">
   <div class="sb-label">Дополнительно</div>
   <div class="sb-item"><span>💪</span><div class="sb-item-text">5 тренировок в неделю с персональным тренером, чтобы пройти свой Путь Героя по зубу и отношениям</div></div>
+  <div class="sb-item"><span>📊</span><div class="sb-item-text">Каждую среду 09:00–10:00 — групповая тренировка, срез прогресса, раздача мотивации</div></div>
 </div>
 <hr class="sb-divider">
 <div class="sb-note" style="border-left-color:#BA7517;">Бонусные программы и челленджи ведёт Антон Казаков для всех спортсменов Зубного кунг-фу.</div>
@@ -383,6 +384,7 @@ function renderCal(){
     } else {
       const mob=window.innerWidth<621;
       if(isWeekday)html+=`<div class="slot skf">${mob?'ЗКФ':'Тренировки Зубного кунг-фу'}</div>`;
+      if(dow===3)html+=`<div class="slot sg">${mob?'Тренировка 09–10':'Групповая тренировка 09:00–10:00'}</div>`;
       if(money.has(date))html+=`<div class="slot sm">${mob?'Деньги':'Денежный интенсив (бонус)'}</div>`;
       if(masks.has(date))html+=`<div class="slot sn">${mob?'Маска':'Работа с маской (бонус)'}</div>`;
     }
