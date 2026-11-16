@@ -1,403 +1,395 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Расписание школы</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;500;600&family=Unbounded:wght@400;600;900&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Психостоматология №1 · Расписание эфиров и программа «Исцеление отношений»</title>
+<meta name="description" content="Что у нас происходит: расписание эфиров, программа «Исцеление отношений», стоимость и темы недели. Начни с диагностики.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;700&display=swap">
 <style>
-:root{
-  --bg:#F7F5F2;--surface:#FFFFFF;--surface2:#F0EDE8;--border:#E8E4DE;
-  --text:#1C1A18;--text2:#6B6560;--text3:#A8A29C;
-  --radius:12px;--radius-sm:8px;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-.page{max-width:1200px;margin:0 auto;padding:2rem 1.5rem;}
-.header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:1.5rem;gap:1.5rem;flex-wrap:wrap;}
-.header-left{flex:1;min-width:180px;}
-.header-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex-shrink:0;}
-@media(max-width:620px){
-  .header{flex-direction:column;align-items:stretch;gap:1rem;}
-  .header-right{align-items:stretch;width:100%;}
-  .month-nav{width:100%;justify-content:center;}
-  #mainTabs{width:100%!important;}
-  #mainTabs>div{flex:1;}
-  #mainTabs .tab{width:100%;text-align:center;box-sizing:border-box;}
-  .school-name{font-size:26px!important;}
-  .layout{grid-template-columns:1fr!important;}
-  .c{padding:4px 3px;min-height:60px;}
-  .dn{font-size:11px;margin-bottom:3px;}
-  .slot{font-size:8px;padding:2px 3px;margin-bottom:2px;line-height:1.3;}
-  .ch{font-size:9px;padding:6px 3px;}
-}
-.school-name{font-family:'Playfair Display',serif;font-size:52px;font-weight:600;letter-spacing:-0.03em;line-height:1.05;}
-.school-sub{font-size:15px;color:var(--text2);margin-top:8px;font-weight:400;letter-spacing:0.01em;}
-.school-sub-small{font-size:12px;color:var(--text3);margin-top:4px;font-weight:300;letter-spacing:0.02em;}
-.school-tag{display:inline-block;margin-top:12px;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--border);border-radius:20px;padding:4px 12px;}
-.month-nav{display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 16px;flex-shrink:0;}
-.month-label{font-family:'Playfair Display',serif;font-size:18px;font-weight:500;text-align:center;}
-.tabs{display:flex;gap:6px;margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:5px;width:fit-content;flex-shrink:0;}
-.tab{padding:8px 20px;border-radius:var(--radius-sm);cursor:pointer;font-size:14px;font-weight:500;color:var(--text2);transition:all 0.2s;border:none;background:none;}
-.tab.on{background:var(--text);color:#fff;box-shadow:0 2px 8px rgba(28,26,24,0.15);}
-.legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:1.5rem;}
-.li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);}
-.ld{width:8px;height:8px;border-radius:50%;}
-.layout{display:grid;grid-template-columns:1fr 240px;gap:20px;align-items:start;}
-.cal-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
-.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));}
-.ch{background:var(--surface2);padding:10px 8px;text-align:center;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;border-bottom:1px solid var(--border);}
-.c{padding:8px;min-height:90px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);transition:background 0.1s;}
-.c:nth-child(7n){border-right:none;}
-.c:hover{background:#FAFAF8;}
-.empty{background:var(--surface2);opacity:0.5;}
-.weekend{background:#FDFCFA;}
-.dn{font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;}
-.weekend .dn{color:var(--text2);}
-.slot{border-radius:5px;padding:3px 6px;margin-bottom:3px;font-size:10px;font-weight:500;line-height:1.4;}
-.tod{background:#F0F7FF!important;outline:2px solid #378ADD;outline-offset:-2px;border-radius:0;}
-.tod .dn{color:#1A5FA8;font-weight:700;}
-.sa{background:#EEF0FF;color:#3730A3;}
-.st{background:#ECFDF5;color:#065F46;}
-.sg{background:#FEF3E2;color:#92400E;}
-.sy{background:#FDF2F8;color:#831843;}
-.sm{background:#FEF2F2;color:#991B1B;font-weight:600;}
-.skf{background:#F0FDF4;color:#14532D;}
-.sn{background:#EFF6FF;color:#1E3A8A;}
-.sidebar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;display:flex;flex-direction:column;gap:14px;position:sticky;top:1.5rem;}
-.sb-label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;}
-.sb-row{display:flex;flex-direction:column;gap:0;}
-.sb-item{font-size:12px;color:var(--text2);line-height:1.6;padding:4px 0;display:flex;gap:7px;align-items:flex-start;}
-.sb-item span{flex-shrink:0;font-size:14px;}
-.sb-item-text{flex:1;}
-.sb-item b{color:var(--text);font-weight:600;}
-.sb-note{font-size:11.5px;color:var(--text2);line-height:1.6;padding:10px 12px;background:var(--surface2);border-radius:var(--radius-sm);border-left:3px solid var(--border);}
-.sb-bonus{font-size:11.5px;color:#065F46;line-height:1.6;padding:10px 12px;background:#ECFDF5;border-radius:var(--radius-sm);border-left:3px solid #6EE7B7;}
-.sb-divider{border:none;border-top:1px solid var(--border);}
-.sb-price{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--border);}
-.sb-price:last-child{border-bottom:none;}
-.sb-price-label{font-size:12px;color:var(--text);font-weight:500;}
-.sb-price-sub{font-size:10px;color:var(--text3);margin-top:1px;}
-.sb-price-val{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;}
-.sb-btn{display:block;width:100%;padding:11px 16px;border-radius:var(--radius-sm);border:none;background:var(--text);color:#fff;cursor:pointer;font-size:12px;font-weight:600;text-align:center;text-decoration:none;font-family:'Mulish',sans-serif;letter-spacing:0.01em;transition:opacity 0.15s;}
-.sb-btn:hover{opacity:0.85;}
-.sb-btn-outline{background:none;border:1.5px solid var(--border);color:var(--text2);}
-.sb-btn-outline:hover{border-color:var(--text);color:var(--text);opacity:1;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
-.cal-wrap{animation:fadeIn 0.25s ease;}
-.sidebar{animation:fadeIn 0.3s ease;}
+/* ---------- Темы: все цвета через переменные ---------- */
+.dash{--bgA:#fbf6ec;--bgB:#efe6d3;--h:#1c1a2b;--t1:#2a2740;--t2:#4a4766;--t3:#7a7690;--tag:#5b3fc4;--btn:#ffffff;--card:#fffdf8;--cardb:#e6dcc7;--chip:#f6efe0;--chipb:#dccfb4;--div:#e6dcc7;--num:#e4dcff;--tend:#fffaf0;--p:#6a4fe0;--pbg:#f0ecff;--pb:#cfc4f7;--b:#2f6fb8;--bbg:#e8f1fb;--bb:#bcd5ee;--t:#1a8f80;--tbg:#e3f5f1;--tb:#b4e0d8;--o:#c8690f;--obg:#fdf0e2;--ob:#f0cfa6;--k:#c43d78;--kbg:#fbe9f1;--kb:#efbfd6;--h1:#ddd4fb;--h2:#bba9f5;--h3:#8d77ee;--h4:#4d8fd6;--h5:#1fae9c}
+.dash:has(input[value="d"]:checked){--bgA:#161a4a;--bgB:#0a0e22;--h:#fff;--t1:#e7e9fb;--t2:#c4c8ea;--t3:#a3a8d0;--tag:#c9c1ff;--btn:#12122a;--card:#12163a;--cardb:#2a3170;--chip:#171b4a;--chipb:#3b3f78;--div:#232a5c;--num:#2a2470;--tend:#0d1030;--p:#a99bff;--pbg:#15133a;--pb:#3b3380;--b:#7db4ff;--bbg:#0f1d3a;--bb:#25507e;--t:#4fd8c4;--tbg:#0b2630;--tb:#1f6b6b;--o:#ffa24a;--obg:#261a14;--ob:#7a4a22;--k:#ff7fb0;--kbg:#2a1230;--kb:#7a2f66;--h1:#3a2f7a;--h2:#4d3fb0;--h3:#6a4fe0;--h4:#3f86c9;--h5:#2fc2b0}
+.dash:has(input[value="l2"]:checked){--bgA:#f7f9fe;--bgB:#e6ecf8;--h:#0f1b3d;--t1:#1c2a52;--t2:#43507a;--t3:#76809f;--tag:#4338ca;--btn:#ffffff;--card:#ffffff;--cardb:#dde3f2;--chip:#f2f5fc;--chipb:#d3dbee;--div:#e3e8f4;--num:#e3e1ff;--tend:#f4f6fd;--p:#5b4fe6;--pbg:#eeecff;--pb:#cdc8fb;--b:#1f6fd1;--bbg:#e7f0fd;--bb:#b9d3f5;--t:#0d9488;--tbg:#e2f6f3;--tb:#a9e0d8;--o:#d9730d;--obg:#fef0e0;--ob:#f5cd9d;--k:#cc3a7e;--kbg:#fce8f1;--kb:#f2bad3;--h1:#d8d9fb;--h2:#aeb0f4;--h3:#7c7ef0;--h4:#3d8ae0;--h5:#12a898}
+.dash:has(input[value="l3"]:checked){--bgA:#f1ecff;--bgB:#dcd3f6;--h:#241a52;--t1:#2f2563;--t2:#52477f;--t3:#7f76a6;--tag:#5a3fd0;--btn:#ffffff;--card:#fcfbff;--cardb:#d6cdf3;--chip:#efeaff;--chipb:#cfc4f0;--div:#ddd5f4;--num:#dcd2ff;--tend:#f4f0ff;--p:#6a4fe0;--pbg:#e2dbff;--pb:#b9a9f2;--b:#2d6fcf;--bbg:#d9e8fb;--bb:#a9c8ee;--t:#14907f;--tbg:#d3f1ea;--tb:#93d5c8;--o:#cf6a12;--obg:#fbe3cc;--ob:#eec08f;--k:#c2377a;--kbg:#f9dbe9;--kb:#eba9c8;--h1:#d9cffb;--h2:#b3a0f4;--h3:#8a72ee;--h4:#4a8dd8;--h5:#1db09f}
 
-/* Modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(28,26,24,0.6);z-index:1000;overflow-y:auto;padding:2rem 1rem;}
-.modal-overlay.open{display:flex;align-items:flex-start;justify-content:center;}
-.modal{background:var(--surface);border-radius:20px;max-width:900px;width:100%;margin:auto;overflow:hidden;position:relative;animation:fadeIn 0.2s ease;}
-.modal-close{position:absolute;top:16px;right:16px;background:var(--surface2);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:16px;color:var(--text2);display:flex;align-items:center;justify-content:center;z-index:10;transition:background 0.15s;}
-.modal-close:hover{background:var(--border);}
-.modal-inner{padding:2rem;}
-.modal-header{text-align:center;margin-bottom:1.5rem;}
-.modal-title{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;letter-spacing:-0.02em;margin-bottom:6px;}
-.modal-sub{font-size:12px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;}
-.trainer-tabs{display:flex;justify-content:center;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;}
-.ttab{display:flex;align-items:center;gap:7px;padding:7px 16px;border-radius:40px;border:1.5px solid var(--border);background:none;color:var(--text2);cursor:pointer;font-family:'Geologica',sans-serif;font-size:13px;font-weight:500;transition:all .2s;}
-.ttab:hover{border-color:#aaa;color:var(--text);}
-.ttab.active{border-color:var(--tacc);color:var(--tacc);background:color-mix(in srgb,var(--tacc) 8%,transparent);}
-.tdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.trainer-layout{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start;}
-@media(max-width:640px){.trainer-layout{grid-template-columns:1fr;}.layout{grid-template-columns:1fr;}}
-.tcard{background:var(--surface2);border-radius:16px;padding:24px;position:relative;overflow:hidden;}
-.tcard::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--tacc);}
-.tavatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;margin-bottom:12px;}
-.thandle{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
-.tbadge{display:inline-block;font-size:10px;letter-spacing:0.07em;text-transform:uppercase;padding:3px 10px;border-radius:40px;border:1px solid var(--tacc);color:var(--tacc);background:color-mix(in srgb,var(--tacc) 8%,transparent);margin-bottom:12px;font-weight:500;}
-.tname{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:600;letter-spacing:-0.02em;margin-bottom:10px;line-height:1.3;}
-.tdesc{font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:20px;}
-.tbars-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;}
-.tbars{display:flex;flex-direction:column;gap:8px;}
-.tbar-row{display:flex;align-items:center;gap:10px;}
-.tbar-name{font-size:12px;color:var(--text2);width:110px;flex-shrink:0;}
-.tbar-track{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
-.tbar-fill{height:100%;border-radius:2px;}
-.tbar-val{font-size:12px;font-weight:500;width:28px;text-align:right;flex-shrink:0;}
-.radar-wrap{background:var(--surface2);border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center;}
-.radar-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;align-self:flex-start;}
-.tprice{font-size:12px;color:var(--text3);text-align:center;margin-top:12px;}
-.tcta{display:block;text-align:center;margin-top:1rem;}
-.tcta a{display:inline-block;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:#fff;background:var(--text);padding:12px 28px;border-radius:40px;text-decoration:none;transition:opacity .2s;}
-.tcta a:hover{opacity:0.8;}
+/* ---------- Переключатель тем (без JS) ---------- */
+.thr{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
+.dot{display:inline-block;cursor:pointer;line-height:0}
+.dot span{display:block;width:22px;height:22px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.18) inset;transition:transform .15s}
+.dot:hover span{transform:scale(1.12)}
+.dot[for="th-d"] span{background:#161a4a}
+.dot[for="th-l1"] span{background:#efe6d3}
+.dot[for="th-l2"] span{background:#cfdaf1}
+.dot[for="th-l3"] span{background:#cdc0f3}
+.dash:has(#th-d:checked) .dot[for="th-d"] span,.dash:has(#th-l1:checked) .dot[for="th-l1"] span,.dash:has(#th-l2:checked) .dot[for="th-l2"] span,.dash:has(#th-l3:checked) .dot[for="th-l3"] span{box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--p)}
+.dash:has(#th-d:focus-visible) .dot[for="th-d"] span,.dash:has(#th-l1:focus-visible) .dot[for="th-l1"] span,.dash:has(#th-l2:focus-visible) .dot[for="th-l2"] span,.dash:has(#th-l3:focus-visible) .dot[for="th-l3"] span{outline:2px solid var(--p);outline-offset:5px}
+.mob .dot span{width:16px;height:16px}
+
+/* ---------- Каркас ---------- */
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:#efe6d3}
+.dash{position:relative;min-height:100vh;min-height:100dvh;background:radial-gradient(1100px 560px at 20% 0%,var(--bgA) 0%,var(--bgB) 62%) var(--bgB);color:var(--t1);font-family:'Manrope',system-ui,sans-serif}
+.dash a{color:var(--p)}
+.serif{font-family:'Playfair Display',Georgia,serif}
+.cta{background:var(--p);color:var(--btn)!important;text-decoration:none;border-radius:12px;font-size:15px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.cta:hover{opacity:.88}
+.cta:focus-visible{outline:3px solid var(--h);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--cardb);border-radius:16px}
+.ico{border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.g{flex:none;border-radius:50%;font-weight:800;display:flex;align-items:center;justify-content:center}
+.g-ж{background:var(--kbg);border:1px solid var(--kb);color:var(--k)}
+.g-м{background:var(--bbg);border:1px solid var(--bb);color:var(--b)}
+.hm-head,.hm-row{display:grid;text-align:center}
+.hm-row{align-items:center}
+.hm-row>div:first-child{text-align:left;font-weight:700;color:var(--t3)}
+.hm-c{height:100%}
+.hm-c[data-l]{cursor:help}
+.hm-c[data-l="1"]{background:var(--h1)}.hm-c[data-l="2"]{background:var(--h2)}.hm-c[data-l="3"]{background:var(--h3)}.hm-c[data-l="4"]{background:var(--h4)}.hm-c[data-l="5"]{background:var(--h5)}
+.legend-bar{display:inline-block;background:linear-gradient(90deg,var(--h1),var(--h2),var(--h3),var(--h4),var(--h5))}
+.price{border:1px solid var(--chipb);background:var(--chip);border-radius:14px;display:flex;flex-direction:column;gap:4px}
+.price div:first-child{font-size:13px;color:var(--t3)}
+.price div:last-child{font-weight:800;color:var(--h);white-space:nowrap}
+.topic{display:flex;align-items:center;background:var(--chip);border:1px solid var(--chipb);font-weight:600;color:var(--h)}
+.vector{display:flex;align-items:center;white-space:nowrap;background:linear-gradient(90deg,var(--pbg),var(--tbg));border:1px solid var(--pb);color:var(--h)}
+[hidden]{display:none!important}
+
+/* ---------- Десктоп (≥ 900 px) ---------- */
+.mob{display:none}
+.dsk{height:100vh;height:100dvh;min-height:760px;overflow:hidden;padding:28px 40px;display:flex;flex-direction:column;gap:16px}
+.dsk header{display:flex;justify-content:space-between;align-items:center;height:56px;flex:none;gap:16px}
+.dsk .brand{display:flex;align-items:center;gap:16px;min-width:0}
+.dsk .logo{width:52px;height:52px;border:1px solid var(--pb);color:var(--p)}
+.dsk h1{margin:0;font-weight:700;font-size:36px;line-height:1.1;white-space:nowrap;color:var(--h)}
+.dsk .themes{margin-left:14px;display:grid;grid-template-columns:repeat(2,auto);gap:8px;flex:none}
+.dsk .join{display:flex;align-items:center;gap:18px;flex:none}
+.dsk .join-t{text-align:right;font-size:15px;line-height:1.4;color:var(--t2);font-weight:500;white-space:nowrap}
+.dsk .join-t b{color:var(--h)}
+.dsk .cta{padding:0 20px;height:48px}
+.tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;flex:none}
+.tile{border-radius:18px;padding:14px 18px 12px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;position:relative}
+.tile .ico{position:absolute;top:14px;right:14px;width:36px;height:36px}
+.tile .n{font-size:68px;font-weight:700;line-height:1;white-space:nowrap}
+.tile .n.sm{font-size:60px}
+.tile .n small{font-size:24px;font-weight:500}
+.tile .cap{display:flex;flex-direction:column;gap:4px}
+.tile .l{font-size:19px;font-weight:700;line-height:1.25;color:var(--h)}
+.tile .l.sm{font-size:16px}
+.tile .s{font-size:13px;color:var(--t3);line-height:1.3}
+.c-p{background:linear-gradient(160deg,var(--pbg) 0%,var(--tend) 130%);border:1px solid var(--pb);box-shadow:0 0 36px color-mix(in srgb,var(--p) 8%,transparent)}.c-p .n,.c-p .ico{color:var(--p);border-color:var(--pb)}
+.c-b{background:linear-gradient(160deg,var(--bbg) 0%,var(--tend) 130%);border:1px solid var(--bb);box-shadow:0 0 36px color-mix(in srgb,var(--b) 8%,transparent)}.c-b .n,.c-b .ico{color:var(--b);border-color:var(--bb)}
+.c-t{background:linear-gradient(160deg,var(--tbg) 0%,var(--tend) 130%);border:1px solid var(--tb);box-shadow:0 0 36px color-mix(in srgb,var(--t) 8%,transparent)}.c-t .n,.c-t .ico{color:var(--t);border-color:var(--tb)}
+.c-o{background:linear-gradient(160deg,var(--obg) 0%,var(--tend) 130%);border:1px solid var(--ob);box-shadow:0 0 36px color-mix(in srgb,var(--o) 8%,transparent)}.c-o .n,.c-o .ico{color:var(--o);border-color:var(--ob)}
+.c-k{background:linear-gradient(160deg,var(--kbg) 0%,var(--tend) 130%);border:1px solid var(--kb);box-shadow:0 0 36px color-mix(in srgb,var(--k) 8%,transparent)}.c-k .n,.c-k .ico{color:var(--k);border-color:var(--kb)}
+.tile .ico{border:1px solid}
+.dsk main{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:16px;flex:1;min-height:0}
+.dsk .sched{padding:20px 24px;display:flex;flex-direction:column;gap:14px;min-height:0}
+.dsk .card-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.dsk .card-t{font-size:24px;font-weight:700;color:var(--h)}
+.dsk .card-n{font-size:12px;color:var(--t3);white-space:nowrap}
+.dsk .hm{flex:1;min-height:0;display:grid;grid-template-rows:auto;grid-auto-rows:minmax(0,1fr);gap:8px}
+.dsk .hm-head,.dsk .hm-row{grid-template-columns:48px repeat(7,minmax(0,1fr));gap:8px;font-size:14px}
+.dsk .hm-head{font-weight:700;color:var(--t3)}
+.dsk .hm-row{align-items:stretch}
+.dsk .hm-row>div:first-child{align-self:center}
+.dsk .hm-c[data-l]{border-radius:12px}
+.dsk .legend{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--t3);flex:none}
+.dsk .legend-bar{width:140px;height:10px;border-radius:6px}
+.dsk .right{display:flex;flex-direction:column;gap:12px;min-height:0}
+.dsk .prog{padding:14px 26px;display:flex;flex-direction:column;gap:8px;flex:none}
+.dsk .prog .card-t{font-size:23px}
+.dsk .pname{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.dsk .pname b{font-size:22px;font-weight:700;color:var(--h)}
+.dsk .pname span{font-size:12px;font-weight:700;color:var(--tag);border:1px solid var(--chipb);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.dsk .pts{display:flex;flex-direction:column;gap:8px}
+.dsk .pt{display:flex;gap:12px;align-items:flex-start}
+.dsk .pt>span{flex:none;width:24px;height:24px;border-radius:50%;background:var(--num);color:var(--tag);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.dsk .pt>div{font-size:14px;line-height:1.5;color:var(--t2)}
+.dsk .pt b{color:var(--h)}
+.dsk .rule{border-left:3px solid var(--p);padding:2px 0 2px 12px;font-size:14px;line-height:1.45;color:var(--t1)}
+.dsk .prices{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.dsk .price{padding:8px 12px}
+.dsk .price div:last-child{font-size:20px}
+.dsk .week{padding:12px 26px;display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.dsk .week .card-t{font-size:23px}
+.dsk .topics{display:grid;grid-template-columns:1fr 1fr;gap:7px;align-content:start}
+.dsk .topic{gap:10px;border-radius:12px;padding:6px 12px}
+.dsk .topic .g{width:22px;height:22px;font-size:11px}
+.dsk .topic>span:last-child{font-size:13px;line-height:1.28}
+.dsk .vector{gap:12px;border-radius:12px;padding:6px 12px;font-size:13px;line-height:1.3;margin-top:auto}
+.dsk .vector .vl{flex:none;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--p)}
+.dsk .vector .vt{font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.dsk .vector .va{flex:none;font-size:18px;color:var(--t);font-weight:800}
+/* узкий десктоп */
+@media (max-width:1320px){
+  .dsk{padding:22px 24px}
+  .dsk h1{font-size:28px}
+  .tile .n{font-size:54px}.tile .n.sm{font-size:46px}.tile .n small{font-size:19px}
+  .tile .l{font-size:16px}.tile .l.sm{font-size:14px}
+}
+@media (max-width:1120px){
+  .dsk .join-t{display:none}
+  .dsk h1{font-size:24px}
+  .tile{padding:12px 14px 10px}
+  .tile .ico{display:none}
+  .tile .n{font-size:44px}.tile .n.sm{font-size:36px}.tile .n small{font-size:16px}
+  .dsk .prices{gap:6px}.dsk .price div:last-child{font-size:16px}
+}
+
+/* ---------- Телефон (< 900 px) ---------- */
+@media (max-width:899.98px){
+  .dsk{display:none}
+  .mob{display:flex;min-height:100vh;min-height:100dvh;padding:14px 16px;flex-direction:column;justify-content:space-between;gap:5px}
+  .mob .num{font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
+  .mob .top{display:flex;align-items:center;gap:10px}
+  .mob .logo{width:32px;height:32px;border:1px solid var(--pb);color:var(--p)}
+  .mob h1{margin:0;font-weight:700;font-size:17px;white-space:nowrap;line-height:1.1;color:var(--h)}
+  .mob .tiles{grid-template-columns:1fr 1fr;gap:8px}
+  .mob .tile{border-radius:14px;padding:5px 12px;display:grid;grid-template-columns:58px 1fr;align-items:center;column-gap:10px;box-shadow:none}
+  .mob .tile.wide{grid-template-columns:auto 1fr;column-gap:16px;grid-column:span 2}
+  .mob .tile .n{font-size:34px}
+  .mob .tile .n small{font-size:13px}
+  .mob .tile .l{font-size:13px;font-weight:700;color:var(--t1);line-height:1.25}
+  .mob .sched{padding:12px;display:flex;flex-direction:column;gap:8px}
+  .mob .card-h{display:flex;justify-content:space-between;align-items:baseline}
+  .mob .card-t{font-size:18px;font-weight:700;color:var(--h)}
+  .mob .themes{display:flex;align-items:center;gap:9px}
+  .mob .hm{display:flex;flex-direction:column;gap:4px}
+  .mob .hm-head,.mob .hm-row{grid-template-columns:34px repeat(7,minmax(0,1fr));gap:4px;font-size:11px}
+  .mob .hm-head{font-weight:700;color:var(--t3)}
+  .mob .hm-c{height:11px}
+  .mob .hm-c[data-l]{border-radius:6px}
+  .mob .legend{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--t3)}
+  .mob .legend-bar{flex:1;height:8px;border-radius:5px}
+  .mob .prog{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+  .mob .pname{display:flex;justify-content:space-between;align-items:baseline}
+  .mob .pname b{font-size:16px;font-weight:700;color:var(--h)}
+  .mob .pname span{font-size:12px;color:var(--t3)}
+  .mob .pdesc{font-size:12px;line-height:1.4;color:var(--t2)}
+  .mob .prices{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .mob .price{padding:6px 8px}
+  .mob .price div:last-child{font-size:14px}
+  .mob .week{display:flex;flex-direction:column;gap:4px}
+  .mob .week-h{display:flex;justify-content:space-between;align-items:baseline}
+  .mob .week-h b{font-size:14px;font-weight:700;color:var(--h)}
+  .mob .week-h span{font-size:10px;color:var(--t3)}
+  .mob .topic{gap:8px;font-size:12px;border-radius:9px;padding:3px 8px}
+  .mob .topic .g{width:17px;height:17px;font-size:10px}
+  .mob .topic>span:last-child,.mob .vector .vt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mob .vector{gap:6px;font-size:11px;font-weight:700;border-radius:9px;padding:4px 8px}
+  .mob .vector .vl{color:var(--p);flex:none}
+  .mob .vector .va{color:var(--t)}
+  .mob .join-t{font-size:13px;color:var(--t2);text-align:center;flex:none}
+  .mob .join-t b{color:var(--h)}
+  .mob .cta{display:flex;height:38px;flex:none}
+}
 </style>
 </head>
 <body>
-<div class="page">
-<div class="header">
-  <div class="header-left">
-    <div class="school-name">Психостоматология №1</div>
-    <div class="school-sub">Онлайн-пространство <span style="text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;">для работы с зубами и отношениями</span> | <a href="https://psyteeth.ru" target="_blank" style="color:#378ADD;text-decoration:none;">psyteeth.ru</a> · психостоматология.рф · psyteeth.com</div>
-    <div style="display:flex;align-items:center;gap:7px;margin-top:4px;">
-      <div style="width:5px;height:5px;border-radius:50%;background:var(--text3);flex-shrink:0;"></div>
-      <div class="school-sub-small" style="margin-top:0;">Бесплатная диагностика с 2020 года</div>
+<div class="dash">
+<input class="thr" type="radio" name="theme" id="th-d" value="d" aria-label="Тёмная тема">
+<input class="thr" type="radio" name="theme" id="th-l1" value="l1" aria-label="Светлая тёплая тема" checked>
+<input class="thr" type="radio" name="theme" id="th-l2" value="l2" aria-label="Светлая холодная тема">
+<input class="thr" type="radio" name="theme" id="th-l3" value="l3" aria-label="Лавандовая тема">
+
+<!-- ================= ДЕСКТОП ================= -->
+<div class="dsk">
+<header>
+  <div class="brand">
+    <div class="ico logo"><svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4.2C4.8 4.2 3.5 6 3.5 8.3c0 2 1 3.1 1.5 5 .5 2 .6 6.5 2.2 6.5s1.6-3.6 3.1-3.6h3.4c1.5 0 1.5 3.6 3.1 3.6s1.7-4.5 2.2-6.5c.5-1.9 1.5-3 1.5-5C20.5 6 19.2 4.2 17 4.2c-1.6 0-2.5.9-5 .9s-3.4-.9-5-.9z"/></svg></div>
+    <h1 class="serif">Психостоматология №1 · <span data-k="month">Ноябрь 2026</span></h1>
+    <div class="themes" role="group" aria-label="Тема оформления">
+      <label class="dot" for="th-d" title="Тёмный"><span></span></label>
+      <label class="dot" for="th-l1" title="Светлый тёплый"><span></span></label>
+      <label class="dot" for="th-l2" title="Светлый холодный"><span></span></label>
+      <label class="dot" for="th-l3" title="Лавандовый"><span></span></label>
     </div>
   </div>
-  <div class="header-right">
-    <div class="month-nav">
-      <div class="month-label" id="mlbl"></div>
-    </div>
-    <div style="display:flex;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:5px;flex-shrink:0;" class="tabs" id="mainTabs">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-        <div style="font-size:9px;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;padding:0 4px;">Базовая программа</div>
-        <div class="tab on" onclick="switchTab(0,this)" style="width:100%;">Исцеление отношений</div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-        <div style="font-size:9px;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;padding:0 4px;">Продвинутый уровень</div>
-        <div class="tab" onclick="switchTab(1,this)" style="width:100%;">Исцеление отношений + Зубное кунг-фу</div>
-      </div>
-    </div>
+  <div class="join">
+    <div class="join-t">Хочешь присоединиться?<br><b>Начни с диагностики</b></div>
+    <a class="cta" href="https://t.me/psyteeth">Записаться на диагностику</a>
   </div>
+</header>
+
+<section class="tiles">
+  <div class="tile c-p"><div class="ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2.5-7 4 14 2.5-7H21"/></svg></div><div class="n serif" data-k="slots_total">192</div><div class="cap"><div class="l">созвона по 15 минут</div></div></div>
+  <div class="tile c-b"><div class="ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.7-6 6-6s6 2.6 6 6"/><circle cx="17.5" cy="9" r="2.4"/><path d="M17 14.2c2.4.3 4 2.2 4 4.8"/></svg></div><div class="n serif" data-k="participants_active">15</div><div class="cap"><div class="l">активных участников</div></div></div>
+  <div class="tile c-t"><div class="ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="1.8"/><path d="M8.2 8.2a5.4 5.4 0 0 0 0 7.6M15.8 8.2a5.4 5.4 0 0 1 0 7.6M5.4 5.4a9.4 9.4 0 0 0 0 13.2M18.6 5.4a9.4 9.4 0 0 1 0 13.2"/></svg></div><div class="n serif" data-k="streams_per_week">13</div><div class="cap"><div class="l">эфиров в неделю</div></div></div>
+  <div class="tile c-o"><div class="ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-4.2 3.4-7 7.5-7s7.5 2.8 7.5 7"/></svg></div><div class="n serif" data-k="trainers_count">4</div><div class="cap"><div class="l">тренера</div><div class="s" data-k="trainers">Антон, Таня, Яна, Гульназ</div></div></div>
+  <div class="tile c-k"><div class="ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></div><div class="n sm serif"><span data-k="hours">51</span><small style="margin:0 6px 0 3px">ч</small><span data-k="minutes">17</span><small style="margin-left:3px">мин</small></div><div class="cap"><div class="l sm">эмоциональной разгрузки лимбической системы</div><div class="s">за последние 30 дней</div></div></div>
+</section>
+
+<main>
+  <section class="card sched">
+    <div class="card-h"><h2 class="card-t serif" style="margin:0">Расписание эфиров</h2><div class="card-n">время по Москве</div></div>
+    <div class="hm" data-heat></div>
+    <div class="legend"><span>Есть места</span><span class="legend-bar"></span><span>Почти полный эфир</span></div>
+  </section>
+  <div class="right">
+    <section class="card prog">
+      <h2 class="card-t serif" style="margin:0">Программа и стоимость</h2>
+      <div class="pname"><b>Исцеление отношений</b><span>базовая программа</span></div>
+      <div class="pts">
+        <div class="pt"><span>1</span><div><b>Эмоциональная разгрузка лимбической системы</b> по выбранному зубу или зубам через аудиосообщение по заданной технике.</div></div>
+        <div class="pt"><span>2</span><div><b>Эфиры:</b> калибровки по зубам, чтобы понимать, с чем связаны проблемы и куда двигаться дальше, и разбор параллельных насущных вопросов по отношениям, здоровью и реализации.</div></div>
+      </div>
+      <div class="rule">Продолжительность эфира: <b>15 минут на человека</b>. Слоты достаются всем.</div>
+      <div class="prices">
+        <div class="price"><div>1 месяц</div><div>15 000 ₽</div></div>
+        <div class="price"><div>3 месяца</div><div>35 000 ₽</div></div>
+        <div class="price"><div>6 месяцев</div><div>60 000 ₽</div></div>
+        <div class="price"><div>12 месяцев</div><div>108 000 ₽</div></div>
+      </div>
+    </section>
+    <section class="card week" data-week hidden>
+      <div class="card-h"><h2 class="card-t serif" style="margin:0">Что разбирали на этой неделе</h2><div class="card-n"><span data-k="week"></span> · без имён</div></div>
+      <div class="topics" data-topics></div>
+      <div class="vector" data-vector><span class="vl">Вектор недели</span><span class="vt" data-k="v_from"></span><span class="va" aria-hidden="true">→</span><span class="vt" data-k="v_to"></span></div>
+    </section>
+  </div>
+</main>
 </div>
-<div class="school-tag" id="scheduleTag" style="margin-bottom:0.75rem;">Расписание групповых эфиров</div>
-<div class="legend" id="legend"></div>
-<div class="layout">
-  <div class="cal-wrap"><div class="cal" id="cal"></div></div>
-  <div class="sidebar" id="sidebar"></div>
+
+<!-- ================= ТЕЛЕФОН ================= -->
+<div class="mob">
+  <div class="top">
+    <div class="ico logo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4.2C4.8 4.2 3.5 6 3.5 8.3c0 2 1 3.1 1.5 5 .5 2 .6 6.5 2.2 6.5s1.6-3.6 3.1-3.6h3.4c1.5 0 1.5 3.6 3.1 3.6s1.7-4.5 2.2-6.5c.5-1.9 1.5-3 1.5-5C20.5 6 19.2 4.2 17 4.2c-1.6 0-2.5.9-5 .9s-3.4-.9-5-.9z"/></svg></div>
+    <p class="serif" style="margin:0"><b style="font-size:17px;white-space:nowrap;color:var(--h)">Психостоматология №1 · <span data-k="month">Ноябрь 2026</span></b></p>
+  </div>
+  <div class="tiles">
+    <div class="tile c-p"><span class="n serif num" data-k="slots_total">192</span><span class="l">созвона по 15 минут</span></div>
+    <div class="tile c-b"><span class="n serif num" data-k="participants_active">15</span><span class="l">активных участников</span></div>
+    <div class="tile c-t"><span class="n serif num" data-k="streams_per_week">13</span><span class="l">эфиров в неделю</span></div>
+    <div class="tile c-o"><span class="n serif num" data-k="trainers_count">4</span><span class="l">тренера</span></div>
+    <div class="tile c-k wide"><span class="n serif num"><span data-k="hours">51</span><small style="margin:0 6px 0 3px">ч</small><span data-k="minutes">17</span><small style="margin-left:3px">мин</small></span><span class="l">эмоциональной разгрузки лимбической системы за последние 30 дней</span></div>
+  </div>
+  <section class="card sched">
+    <div class="card-h"><div class="card-t serif">Расписание эфиров · мск</div>
+      <div class="themes" role="group" aria-label="Тема оформления">
+        <label class="dot" for="th-d" title="Тёмный"><span></span></label>
+        <label class="dot" for="th-l1" title="Светлый тёплый"><span></span></label>
+        <label class="dot" for="th-l2" title="Светлый холодный"><span></span></label>
+        <label class="dot" for="th-l3" title="Лавандовый"><span></span></label>
+      </div>
+    </div>
+    <div class="hm" data-heat></div>
+    <div class="legend"><span>Есть места</span><span class="legend-bar"></span><span>Почти полно</span></div>
+  </section>
+  <section class="card prog">
+    <div class="pname"><b>Исцеление отношений</b><span>базовая программа</span></div>
+    <div class="pdesc">Работа с разгрузкой лимбической системы и эфиры с разборами и калибровками по 15 минут на человека.</div>
+    <div class="prices">
+      <div class="price"><div>1 мес</div><div>15 000₽</div></div>
+      <div class="price"><div>3 мес</div><div>35 000₽</div></div>
+      <div class="price"><div>6 мес</div><div>60 000₽</div></div>
+      <div class="price"><div>12 мес</div><div>108 000₽</div></div>
+    </div>
+  </section>
+  <section class="week" data-week hidden>
+    <div class="week-h"><b>Что разбирали на этой неделе</b><span>без имён</span></div>
+    <div class="topics" data-topics style="display:flex;flex-direction:column;gap:4px"></div>
+    <div class="vector" data-vector><span class="vl">ВЕКТОР</span><span class="vt"><span data-k="v_from_s"></span> <span class="va">→</span> <span data-k="v_to_s"></span></span></div>
+  </section>
+  <div class="join-t">Хочешь присоединиться? <b>Начни с диагностики</b></div>
+  <a class="cta" href="https://t.me/psyteeth">Записаться на диагностику</a>
 </div>
 </div>
 
-<!-- Modal -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModalDirect()">✕</button>
-    <div class="modal-inner">
-      <div class="modal-header">
-        <div class="modal-title">Зубное Кунг-фу</div>
-        <div class="modal-sub">Тёмная и светлая триада · Профили тренеров</div>
-      </div>
-      <div class="trainer-tabs" id="trainerTabs"></div>
-      <div class="trainer-layout">
-        <div class="tcard" id="tcard"></div>
-        <div class="radar-wrap">
-          <div class="radar-label">Профиль триады</div>
-          <canvas id="radarChart"></canvas>
-          <div class="tprice" id="tprice"></div>
-        </div>
-      </div>
-      <div class="tcta"><a id="tctaBtn" href="#" target="_blank">Записаться</a></div>
-    </div>
-  </div>
-</div>
-
+<!-- Последние известные значения: показываются, если data/stats.json не загрузился. Только агрегаты, без имён участников. -->
+<script type="application/json" id="stats-fallback">
+{"updated":"2026-11-16","source":"manual","slots_total":192,"participants_active":15,"streams_per_week":13,"trainers":["Антон","Таня","Яна","Гульназ"],"limbic_unload_30d":{"hours":51,"minutes":17},
+"heat":[{"day":"ВС","row":"7:00","time":"7:07","trainer":"Антон","avg":1.3},{"day":"ВТ","row":"8:00","trainer":"Антон","avg":4.5},{"day":"ЧТ","row":"8:00","trainer":"Антон","avg":4.2},{"day":"ПТ","row":"8:00","time":"8:30","trainer":"Антон","avg":4.0},{"day":"СБ","row":"8:00","trainer":"Антон","avg":3.5},{"day":"ПН","row":"10:00","trainer":"Таня","avg":4.0},{"day":"ВТ","row":"10:00","trainer":"Антон","avg":4.8},{"day":"ЧТ","row":"10:00","trainer":"Антон","avg":4.8},{"day":"ПТ","row":"10:00","trainer":"Антон","avg":5.0},{"day":"СБ","row":"10:00","trainer":"Антон","avg":4.0},{"day":"ВТ","row":"11:00","trainer":"Яна","avg":4.0},{"day":"СР","row":"17:00","trainer":"Гульназ","avg":3.8},{"day":"ЧТ","row":"20:00","trainer":"Таня","avg":3.0}]}
+</script>
 <script>
-const MR=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-const _now=new Date();
-let cy=_now.getFullYear(),cm=_now.getMonth(),mode=0;
+(function(){
+  var DAYS=['ПН','ВТ','СР','ЧТ','ПТ','СБ','ВС'];
+  var DAY_FULL={'ПН':'Понедельник','ВТ':'Вторник','СР':'Среда','ЧТ':'Четверг','ПТ':'Пятница','СБ':'Суббота','ВС':'Воскресенье'};
+  var MONTH=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+  var MONTH_GEN=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 
-const IO_SCHED={
-  1:[{cls:'st',lbl:'Таня 10:00–11:00'}],
-  2:[{cls:'sa',lbl:'Антон 08:00–09:00'},{cls:'sa',lbl:'10:00–11:00'}],
-  3:[{cls:'sg',lbl:'Гульназ 15:00–16:00'}],
-  4:[{cls:'sa',lbl:'Антон 08:00–09:00'},{cls:'sa',lbl:'10:00–11:00'},{cls:'st',lbl:'Таня 20:00–21:00'}],
-  5:[{cls:'sa',lbl:'Антон 08:00–09:00'},{cls:'sa',lbl:'10:00–11:00'}],
-  6:[{cls:'sa',lbl:'Антон 08:00–09:00'},{cls:'sa',lbl:'10:00–11:00'}],
-  0:[{cls:'sy',lbl:'Яна 11:00–12:00'}]
-};
+  function $$(sel){return Array.prototype.slice.call(document.querySelectorAll(sel));}
+  function set(k,v){$$('[data-k="'+k+'"]').forEach(function(el){el.textContent=v;});}
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
+  function mins(t){var p=String(t).split(':');return (+p[0])*60+(+p[1]||0);}
+  function level(avg){return avg>=4.8?5:avg>=4.0?4:avg>=3.5?3:avg>=3.0?2:1;}
+  function fmtAvg(a){return Number(a).toFixed(1).replace('.',',');}
+  function parseDate(s){var p=String(s).split('-');return new Date(+p[0],(+p[1])-1,+p[2]);}
 
-const IO_LEG=[{c:'#6366F1',l:'Антон'},{c:'#10B981',l:'Таня'},{c:'#F59E0B',l:'Гульназ'},{c:'#EC4899',l:'Яна'}];
-const ZKF_LEG=[{c:'#16A34A',l:'Тренировки Зубного кунг-фу'},{c:'#BA7517',l:'Групповая тренировка (ср, 09:00–10:00)'},{c:'#EF4444',l:'Денежный интенсив (бонус, с 21-го)'},{c:'#3B82F6',l:'Работа с маской (бонус, каждые 3 дня)'}];
-
-const SIDEBAR_IO=`
-<div class="sb-row">
-  <div class="sb-label">Через что работаем</div>
-  <div class="sb-item"><span>🧠</span><div class="sb-item-text"><b>Лимбическая система</b> — через саморегуляцию</div></div>
-  <div class="sb-item"><span>⚔️</span><div class="sb-item-text"><b>Место в иерархии</b> — через стычки с идеализируемой альфа-жертвой</div></div>
-  <div class="sb-item"><span>🎙️</span><div class="sb-item-text"><b>Разбор актуальных запросов</b> — через групповые эфиры</div></div>
-</div>
-<hr class="sb-divider">
-<div class="sb-row">
-  <div class="sb-label">Что входит в месячный абонемент</div>
-  <div class="sb-item"><span>🦷</span><div class="sb-item-text">Атаки по зубам, проверка саморегуляций</div></div>
-  <div class="sb-item"><span>🎙️</span><div class="sb-item-text">11 групповых эфиров в неделю</div></div>
-  <div class="sb-item"><span>🧘</span><div class="sb-item-text">Медитация для самостоятельной проработки любого дискомфорта</div></div>
-  <div class="sb-item"><span>🌬️</span><div class="sb-item-text">Дыхательная медитация для гармонизации нервной системы</div></div>
-  <div class="sb-item"><span>🔒</span><div class="sb-item-text">Бесплатный VPN для всей семьи</div></div>
-</div>
-<hr class="sb-divider">
-<div class="sb-row">
-  <div class="sb-label">Стоимость абонемента Исцеление отношений</div>
-  <div class="sb-price"><div><div class="sb-price-label">1 месяц</div></div><span class="sb-price-val">15 000 ₽</span></div>
-  <div class="sb-price"><div><div class="sb-price-label">3 месяца</div></div><span class="sb-price-val">35 000 ₽</span></div>
-  <div class="sb-price"><div><div class="sb-price-label">6 месяцев</div></div><span class="sb-price-val">60 000 ₽</span></div>
-  <div class="sb-price"><div><div class="sb-price-label">12 месяцев</div></div><span class="sb-price-val">108 000 ₽</span></div>
-</div>
-<hr class="sb-divider">
-<div style="font-size:12px;color:var(--text2);line-height:1.65;padding:10px 0;">Хотите понять, нужна ли вам работа с зубами через отношения? Приходите на бесплатную диагностику — разберём ваш случай и посмотрим, подходят ли вам инструменты Психостоматологии №1.</div>
-<a class="sb-btn" href="https://t.me/psyteeth" target="_blank">Записаться на бесплатную диагностику по зубу → @psyteeth</a>
-<a class="sb-btn sb-btn-outline" href="https://t.me/psy_teeth_official/439" target="_blank" style="margin-top:6px;">Посмотреть примеры диагностики — чат Психостоматологии №1</a>
-`;
-
-const SIDEBAR_ZKF=`
-<div class="sb-note">Зубное кунг-фу проводится только вместе с Исцелением отношений. С зубами работаем теми же инструментами, плюс:</div>
-<div class="sb-row">
-  <div class="sb-label">Через что работаем</div>
-  <div class="sb-item"><span>🪞</span><div class="sb-item-text"><b>Интеграция отчуждённых частей личности</b> и улучшение отношений внутри семьи — через созидательные экспозиции и смену образа жизни</div></div>
-  <div class="sb-item"><span>💀</span><div class="sb-item-text"><b>Деструкция масок, нарциссический коллапс и сепарация</b> — через групповые контент-эфиры и эфиры с поддержкой</div></div>
-  <div class="sb-item"><span>💰</span><div class="sb-item-text"><b>Ежемесячные денежные интенсивы-челленджи</b> — через техники Зубного кунг-фу и невербальные тренажёры</div></div>
-</div>
-<hr class="sb-divider">
-<div class="sb-row">
-  <div class="sb-label">Дополнительно</div>
-  <div class="sb-item"><span>💪</span><div class="sb-item-text">5 тренировок в неделю с персональным тренером, чтобы пройти свой Путь Героя по зубу и отношениям</div></div>
-  <div class="sb-item"><span>📊</span><div class="sb-item-text">Каждую среду 09:00–10:00 — групповая тренировка, срез прогресса, раздача мотивации</div></div>
-</div>
-<hr class="sb-divider">
-<div class="sb-note" style="border-left-color:#BA7517;">Бонусные программы и челленджи ведёт Антон Казаков для всех спортсменов Зубного кунг-фу.</div>
-<hr class="sb-divider">
-<div class="sb-row">
-  <div class="sb-label">Стоимость абонемента Исцеление отношений + Зубное кунг-фу</div>
-  <div class="sb-price"><div><div class="sb-price-label">1 месяц</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div><span class="sb-price-val">35 000 ₽</span></div>
-  <div class="sb-price"><div><div class="sb-price-label">3 месяца</div><div class="sb-price-sub">Таня, Яна или Гульназ</div></div><span class="sb-price-val">95 000 ₽</span></div>
-</div>
-<hr class="sb-divider">
-<button class="sb-btn" onclick="openModal()">Выбрать тренера и записаться на зубное кунг-фу</button>
-`;
-
-// Trainer data
-const TRAINERS=[
-  {handle:"@Tatyana_Dynnikova",tg:"https://t.me/Tatyana_Dynnikova",full:"Таня Дынникова",acc:"#534AB7",avBg:"#EEEDFE",avFg:"#3C3489",ini:"ТД",name:"Добрая опора",kf:"ясли",price:"от 35 000 ₽/месяц",emoji:"⚖️",desc:"Забота превыше всего. Не давит, не манипулирует — просто отбитая заботушка. Первая точка входа: идеальный вариант для детей и тех, кто не готов к серьёзным нагрузкам.",s:{"Манипуляции":1.4,"Нарциссизм":2.7,"Психопатия":1.7,"Вера в людей":3.5,"Гуманизм":4.0,"Забота":4.0}},
-  {handle:"@kazakovaw",tg:"https://t.me/kazakovaw",full:"Гульназ Казакова",acc:"#1D9E75",avBg:"#E1F5EE",avFg:"#085041",ini:"ГК",name:"Архитектор Влияния",kf:"в близость",price:"от 35 000 ₽/месяц",emoji:"🕸️",desc:"Внебрачная пра-пра-правнучка Макиавелли. Видит все манипуляции насквозь. Раскладывает все по полочкам. Прокачивает по всем фронтам: секс, отношения, близость, реализация и татарские пироги.",s:{"Манипуляции":3.7,"Нарциссизм":2.4,"Психопатия":2.4,"Вера в людей":2.5,"Гуманизм":2.8,"Забота":3.0}},
-  {handle:"@YanaPanchenk0",tg:"https://t.me/YanaPanchenk0",full:"Яна Панченко",acc:"#993556",avBg:"#FBEAF0",avFg:"#72243E",ini:"ЯП",name:"Нарцисс с Душой",kf:"позволь себе",price:"от 35 000 ₽/месяц",emoji:"🌹",desc:"Нарциссизм + высокий гуманизм + свобода от долга привели её сначала в порно, а затем и в психологию. Яркая, самодостаточная, знает, как получать удовольствие, и при этом искренне любит людей. Умеет блистать и помогать одновременно.",s:{"Манипуляции":2.3,"Нарциссизм":3.0,"Психопатия":3.1,"Вера в людей":3.0,"Гуманизм":4.5,"Забота":2.5}},
-  {handle:"@happinessguy",tg:"https://t.me/happinessguy",full:"Антон Казаков",acc:"#BA7517",avBg:"#FAEEDA",avFg:"#633806",ini:"АК",name:"Главный психопат",kf:"бесславные психопаты",price:"500 000 ₽ / 3 месяца",emoji:"⚡",desc:"Твой Оби-Ван на Пути Героя, твой [капитан] Джек Воробей в море неопределённости. Не избегает страхов. Стыд его не останавливает, вина не парализует. Берёт в работу по договорённости.",s:{"Манипуляции":2.7,"Нарциссизм":2.7,"Психопатия":3.8,"Вера в людей":4.0,"Гуманизм":4.3,"Забота":3.5}}
-];
-
-const LABELS=Object.keys(TRAINERS[0].s);
-let curTrainer=0,radarChart=null;
-
-function openModal(){
-  document.getElementById('modalOverlay').classList.add('open');
-  document.body.style.overflow='hidden';
-  if(!document.getElementById('trainerTabs').children.length) buildTrainerTabs();
-  const randomIdx=Math.floor(Math.random()*TRAINERS.length);
-  selectTrainer(randomIdx);
-}
-function closeModal(e){if(e.target===document.getElementById('modalOverlay'))closeModalDirect();}
-function closeModalDirect(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
-
-function buildTrainerTabs(){
-  const el=document.getElementById('trainerTabs');
-  TRAINERS.forEach((p,i)=>{
-    const btn=document.createElement('button');
-    btn.className='ttab'+(i===curTrainer?' active':'');
-    btn.style.setProperty('--tacc',p.acc);
-    btn.innerHTML=`<span class="tdot" style="background:${p.acc}"></span>${p.full.split(' ')[0]}`;
-    btn.onclick=()=>selectTrainer(i);
-    el.appendChild(btn);
-  });
-}
-
-function selectTrainer(i){
-  curTrainer=i;
-  const p=TRAINERS[i];
-  document.querySelectorAll('.ttab').forEach((t,j)=>{
-    t.classList.toggle('active',j===i);
-  });
-  const card=document.getElementById('tcard');
-  card.style.setProperty('--tacc',p.acc);
-  card.innerHTML=`
-    <div class="tavatar" style="background:${p.avBg};color:${p.avFg}">${p.ini}</div>
-    <div class="thandle">${p.handle}</div>
-    <div class="tbadge">зубное кунг-фу: ${p.kf}</div>
-    <div class="tname">${p.emoji} ${p.name}</div>
-    <div class="tdesc">${p.desc}</div>
-    <div class="tbars-label">Показатели</div>
-    <div class="tbars">${LABELS.map(l=>`
-      <div class="tbar-row">
-        <span class="tbar-name">${l}</span>
-        <div class="tbar-track"><div class="tbar-fill" style="width:${(p.s[l]/5)*100}%;background:${p.acc}"></div></div>
-        <span class="tbar-val">${p.s[l]}</span>
-      </div>`).join('')}
-    </div>`;
-
-  document.getElementById('tprice').textContent=p.price;
-  const ctaBtn=document.getElementById('tctaBtn');
-  ctaBtn.href=p.tg;
-  ctaBtn.textContent=`Записаться → ${p.handle}`;
-
-  const canvas=document.getElementById('radarChart');
-  const wrap=canvas.parentElement;
-  const size=Math.min(wrap.offsetWidth-40,280);
-  canvas.width=size;canvas.height=size;
-  const ctx=canvas.getContext('2d');
-  if(radarChart)radarChart.destroy();
-  radarChart=new Chart(ctx,{type:'radar',data:{labels:LABELS,datasets:[{data:LABELS.map(l=>p.s[l]),backgroundColor:p.acc+'18',borderColor:p.acc,borderWidth:2,pointBackgroundColor:p.acc,pointBorderColor:'#fff',pointBorderWidth:1.5,pointRadius:4}]},options:{responsive:false,layout:{padding:{top:16,bottom:16,left:16,right:16}},plugins:{legend:{display:false}},scales:{r:{min:0,max:5,ticks:{display:false,stepSize:1},grid:{color:'rgba(0,0,0,0.06)'},angleLines:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10,family:"'Geologica',sans-serif"},color:'#9a9790',padding:10}}}}});
-}
-
-// Calendar
-const DAY_NAMES=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
-const COL_DOWS=[1,2,3,4,5,6,0];
-const WEEKENDS=new Set([6,0]);
-const WEEKDAYS=new Set([1,2,3,4,5]);
-
-function moneyDays(y,m){const res=new Set();for(let i=0;i<8;i++){const d=new Date(y,m,21+i);if(d.getMonth()===m)res.add(d.getDate());}return res;}
-function maskDays(y,m){const res=new Set();const last=new Date(y,m+1,0).getDate();for(let d=1;d<=last;d+=3)res.add(d);return res;}
-
-function switchTab(t,el){
-  mode=t;
-  document.querySelectorAll('#mainTabs .tab').forEach(x=>x.classList.remove('on'));
-  el.classList.add('on');
-  render();
-}
-
-function render(){
-  document.getElementById('mlbl').textContent=MR[cm]+' '+cy;
-  document.getElementById('scheduleTag').textContent=mode===0?'Расписание групповых эфиров':'Расписание активностей';
-  document.getElementById('legend').innerHTML=(mode===0?IO_LEG:ZKF_LEG).map(x=>`<div class="li"><div class="ld" style="background:${x.c}"></div>${x.l}</div>`).join('');
-  document.getElementById('sidebar').innerHTML=mode===0?SIDEBAR_IO:SIDEBAR_ZKF;
-  renderCal();
-}
-
-function renderCal(){
-  const cal=document.getElementById('cal');
-  const last=new Date(cy,cm+1,0).getDate();
-  const today=new Date();
-  const todayD=(today.getFullYear()===cy&&today.getMonth()===cm)?today.getDate():-1;
-  const money=moneyDays(cy,cm);
-  const masks=maskDays(cy,cm);
-  const firstDow=new Date(cy,cm,1).getDay();
-  const startOffset=COL_DOWS.indexOf(firstDow);
-  const totalCells=Math.ceil((startOffset+last)/7)*7;
-  let html='';
-  DAY_NAMES.forEach(n=>{html+=`<div class="ch">${n}</div>`;});
-  for(let cell=0;cell<totalCells;cell++){
-    const col=cell%7,dow=COL_DOWS[col],date=cell-startOffset+1;
-    const isWeekend=WEEKENDS.has(dow),isWeekday=WEEKDAYS.has(dow);
-    if(date<1||date>last){html+=`<div class="c empty"></div>`;continue;}
-    const isToday=date===todayD;
-    const cls=['c',isToday?'tod':'',isWeekend&&!isToday?'weekend':''].filter(Boolean).join(' ');
-    html+=`<div class="${cls}"><div class="dn">${date}</div>`;
-    if(mode===0){
-      const mob=window.innerWidth<621;
-      const IO_MOB={
-        1:[{cls:'st',lbl:'Таня 10–11'}],
-        2:[{cls:'sa',lbl:'Антон 08–09'},{cls:'sa',lbl:'10–11'}],
-        3:[{cls:'sg',lbl:'Гульназ 15–16'}],
-        4:[{cls:'sa',lbl:'Антон 08–09'},{cls:'sa',lbl:'10–11'},{cls:'st',lbl:'Таня 20–21'}],
-        5:[{cls:'sa',lbl:'Антон 08–09'},{cls:'sa',lbl:'10–11'}],
-        6:[{cls:'sa',lbl:'Антон 08–09'},{cls:'sa',lbl:'10–11'}],
-        0:[{cls:'sy',lbl:'Яна 11–12'}]
-      };
-      ((mob?IO_MOB:IO_SCHED)[dow]||[]).forEach(s=>{html+=`<div class="slot ${s.cls}">${s.lbl}</div>`;});
-    } else {
-      const mob=window.innerWidth<621;
-      if(isWeekday)html+=`<div class="slot skf">${mob?'ЗКФ':'Тренировки Зубного кунг-фу'}</div>`;
-      if(dow===3)html+=`<div class="slot sg">${mob?'Тренировка 09–10':'Групповая тренировка 09:00–10:00'}</div>`;
-      if(money.has(date))html+=`<div class="slot sm">${mob?'Деньги':'Денежный интенсив (бонус)'}</div>`;
-      if(masks.has(date))html+=`<div class="slot sn">${mob?'Маска':'Работа с маской (бонус)'}</div>`;
-    }
-    html+=`</div>`;
+  function renderHeat(heat){
+    var rows=[];heat.forEach(function(h){if(rows.indexOf(h.row)<0)rows.push(h.row);});
+    rows.sort(function(a,b){return mins(a)-mins(b);});
+    $$('[data-heat]').forEach(function(box){
+      box.textContent='';
+      var head=el('div','hm-head');head.appendChild(el('div'));
+      DAYS.forEach(function(d){head.appendChild(el('div',null,d));});
+      box.appendChild(head);
+      rows.forEach(function(r){
+        var row=el('div','hm-row');row.appendChild(el('div',null,r));
+        DAYS.forEach(function(d){
+          var c=el('div','hm-c');
+          var h=heat.filter(function(x){return x.day===d&&x.row===r;})[0];
+          if(h){
+            c.setAttribute('data-l',level(+h.avg));
+            var tip=DAY_FULL[d]+', '+(h.time||r)+' мск. '+h.trainer+'. Обычно '+fmtAvg(h.avg)+' чел.';
+            c.title=tip;c.setAttribute('role','img');c.setAttribute('aria-label',tip);
+          }
+          row.appendChild(c);
+        });
+        box.appendChild(row);
+      });
+    });
   }
-  cal.innerHTML=html;
-}
 
-render();
-window.addEventListener('resize',()=>renderCal());
+  function applyStats(s){
+    if(!s||typeof s!=='object')return;
+    if(s.updated){var d=parseDate(s.updated);if(!isNaN(d))set('month',MONTH[d.getMonth()]+' '+d.getFullYear());}
+    if(s.slots_total!=null)set('slots_total',s.slots_total);
+    if(s.participants_active!=null)set('participants_active',s.participants_active);
+    if(s.streams_per_week!=null)set('streams_per_week',s.streams_per_week);
+    if(Array.isArray(s.trainers)&&s.trainers.length){set('trainers_count',s.trainers.length);set('trainers',s.trainers.join(', '));}
+    var lu=s.limbic_unload_30d;
+    if(lu&&lu.hours!=null){set('hours',lu.hours);set('minutes',lu.minutes||0);}
+    if(Array.isArray(s.heat)&&s.heat.length)renderHeat(s.heat);
+  }
+
+  function weekLabel(w){
+    var p=String(w||'').split('/');if(p.length!==2)return '';
+    var a=parseDate(p[0]),b=parseDate(p[1]);if(isNaN(a)||isNaN(b))return '';
+    return a.getMonth()===b.getMonth()
+      ? a.getDate()+'–'+b.getDate()+' '+MONTH_GEN[b.getMonth()]
+      : a.getDate()+' '+MONTH_GEN[a.getMonth()]+' – '+b.getDate()+' '+MONTH_GEN[b.getMonth()];
+  }
+  function topicEl(it,text){
+    var t=el('div','topic');
+    if(it.g==='ж'||it.g==='м'){var g=el('span','g g-'+it.g,it.g.toUpperCase());g.setAttribute('aria-label',it.g==='ж'?'Женщина':'Мужчина');t.appendChild(g);}
+    t.appendChild(el('span',null,text));return t;
+  }
+  function applyTopics(t){
+    if(!t||!Array.isArray(t.items)||!t.items.length)return;
+    var dsk=document.querySelector('.dsk [data-topics]'),mob=document.querySelector('.mob [data-topics]');
+    t.items.slice(0,6).forEach(function(it){if(it&&it.text)dsk.appendChild(topicEl(it,it.text));});
+    t.items.filter(function(it){return it&&it.short;}).slice(0,4).forEach(function(it){mob.appendChild(topicEl(it,it.short));});
+    set('week',weekLabel(t.week));
+    var v=t.vector;
+    if(v&&v.from&&v.to){
+      set('v_from','от «'+v.from+'»');set('v_to','к «'+v.to+'»');
+      set('v_from_s','«'+(v.from_short||v.from)+'»');set('v_to_s','«'+(v.to_short||v.to)+'»');
+    }else{$$('[data-vector]').forEach(function(e){e.hidden=true;});}
+    $$('[data-week]').forEach(function(e){e.hidden=false;});
+    if(!mob.children.length)document.querySelector('.mob [data-week]').hidden=true;
+  }
+
+  function getJSON(url){
+    return fetch(url,{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();});
+  }
+
+  try{applyStats(JSON.parse(document.getElementById('stats-fallback').textContent));}catch(e){}
+  getJSON('data/stats.json').then(applyStats).catch(function(){});
+  getJSON('data/topics.json').then(applyTopics).catch(function(){});
+})();
 </script>
 </body>
 </html>

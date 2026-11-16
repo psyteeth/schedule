@@ -1,0 +1,26 @@
+{
+  "updated": "2026-11-16",
+  "source": "manual",
+  "slots_total": 192,
+  "slots_past": 98,
+  "slots_upcoming": 94,
+  "participants_active": 15,
+  "streams_per_week": 13,
+  "trainers": ["Антон", "Таня", "Яна", "Гульназ"],
+  "limbic_unload_30d": {"hours": 51, "minutes": 17, "sr_count": 241, "window": "2026-10-18/2026-11-16"},
+  "heat": [
+    {"day": "ВС", "row": "7:00", "time": "7:07", "trainer": "Антон", "avg": 1.3},
+    {"day": "ВТ", "row": "8:00", "trainer": "Антон", "avg": 4.5},
+    {"day": "ЧТ", "row": "8:00", "trainer": "Антон", "avg": 4.2},
+    {"day": "ПТ", "row": "8:00", "time": "8:30", "trainer": "Антон", "avg": 4.0},
+    {"day": "СБ", "row": "8:00", "trainer": "Антон", "avg": 3.5},
+    {"day": "ПН", "row": "10:00", "trainer": "Таня", "avg": 4.0},
+    {"day": "ВТ", "row": "10:00", "trainer": "Антон", "avg": 4.8},
+    {"day": "ЧТ", "row": "10:00", "trainer": "Антон", "avg": 4.8},
+    {"day": "ПТ", "row": "10:00", "trainer": "Антон", "avg": 5.0},
+    {"day": "СБ", "row": "10:00", "trainer": "Антон", "avg": 4.0},
+    {"day": "ВТ", "row": "11:00", "trainer": "Яна", "avg": 4.0},
+    {"day": "СР", "row": "17:00", "trainer": "Гульназ", "avg": 3.8},
+    {"day": "ЧТ", "row": "20:00", "trainer": "Таня", "avg": 3.0}
+  ]
+}

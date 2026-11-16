@@ -1,0 +1,10 @@
+.DS_Store
+# список имён участников для check_no_names.py: только локально
+.names.local
+# сырые выгрузки и ключи: только вне репозитория
+*.csv
+*.xlsx
+service-account*.json
+__pycache__/
+shots/
+.impeccable/
