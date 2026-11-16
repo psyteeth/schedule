@@ -136,7 +136,7 @@ function efiryStats_(values, display, today) {
   streams.forEach(function (s) {
     s.occ = [];
     cols.forEach(function (c) {
-      var date = null, start = null, n = 0, cells = 0;
+      var date = null, start = null, n = 0; // n — люди: каждый получает свои 15 минут, «Янина, Аня» = 2 созвона
       s.rows.forEach(function (r) {
         var d = ymdOf_(values[r][c], display[r][c]);
         if (d) date = d;
@@ -144,7 +144,6 @@ function efiryStats_(values, display, today) {
         if (mm === null) return;
         if (start === null) start = mm;
         var ps = peopleOf_(display[r][c + 2]);
-        if (ps.length) cells++;
         n += ps.length;
         ps.forEach(function (p) { if (p !== 'занято') people[p] = 1; });
       });
@@ -152,8 +151,8 @@ function efiryStats_(values, display, today) {
       if (date) lastDate[key] = date; else date = lastDate[key] || null;
       if (n > 0) {
         s.occ.push({ date: date, start: start, n: n });
-        slotsTotal += cells;
-        if (date && date <= today) slotsPast += cells;
+        slotsTotal += n;
+        if (date && date <= today) slotsPast += n;
       }
     });
   });
