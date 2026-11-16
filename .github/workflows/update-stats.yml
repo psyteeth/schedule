@@ -1,0 +1,42 @@
+name: Обновить цифры дашборда
+
+on:
+  schedule:
+    - cron: "50 20 * * *" # 23:50 по Москве
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-stats
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Забрать агрегаты из Apps Script
+        env:
+          STATS_URL: ${{ secrets.STATS_URL }}
+        run: python3 scripts/fetch_stats.py
+
+      - name: Закоммитить, если цифры изменились
+        run: |
+          if git diff --quiet -- data/stats.json; then
+            echo "Цифры не изменились"
+            exit 0
+          fi
+          python3 scripts/check_no_names.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/stats.json
+          git commit -m "Обновить цифры дашборда ($(date -u +%F))"
+          git push
