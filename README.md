@@ -5,14 +5,14 @@ https://psyteeth.github.io/schedule/ — один экран: цифры, рас
 ## Файлы
 - `index.html` — вся страница (десктоп ≥ 900 px и телефон, 4 темы на CSS без JS).
 - `data/stats.json` — агрегаты: слоты, участники, эфиры, тренеры, минуты разгрузки, тепловая карта. Только числа и имена тренеров.
-- `data/topics.json` — «Что разбирали на этой неделе». Нет файла — блок скрыт.
+- `data/topics.json` — «Запросы прошлой недели». Нет файла — блок скрыт.
 
 ## Правило: никаких имён участников
 - `.names.local` (не коммитится) — имена участников, по одному на строку.
 - `python3 scripts/check_no_names.py` — рабочие файлы; `--history` — вся история git.
 - Хук `.githooks/pre-commit` проверяет каждый коммит. Включить в новой копии: `git config core.hooksPath .githooks`.
 
-## Обновить темы недели
+## Обновить запросы недели
 ```bash
 python3 scripts/validate_topics.py new_topics.json --write
 ```
