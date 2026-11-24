@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-23",
+  "updated": "2026-11-24",
   "source": "apps_script",
-  "slots_total": 196,
-  "slots_past": 150,
-  "slots_upcoming": 46,
+  "slots_total": 195,
+  "slots_past": 161,
+  "slots_upcoming": 34,
   "participants_active": 16,
   "streams_per_week": 13,
   "trainers": [
@@ -14,9 +14,9 @@
   ],
   "limbic_unload_30d": {
     "hours": 68,
-    "minutes": 15,
-    "sr_count": 294,
-    "window": "2026-10-25/2026-11-23",
+    "minutes": 26,
+    "sr_count": 295,
+    "window": "2026-10-26/2026-11-24",
     "includes_trainers": true
   },
   "heat": [
@@ -62,7 +62,7 @@
       "day": "ВТ",
       "row": "10:00",
       "trainer": "Антон",
-      "avg": 4.8
+      "avg": 4.5
     },
     {
       "day": "ЧТ",
