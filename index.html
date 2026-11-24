@@ -126,7 +126,13 @@ a.logo{text-decoration:none}
 .dsk .topic>span:last-child{font-size:13px;line-height:1.28}
 .dsk .vector{gap:12px;border-radius:12px;padding:6px 12px;font-size:13px;line-height:1.3;margin-top:auto}
 .dsk .vector .vl{flex:none;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--p)}
-.dsk .vector .vt{font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.dsk .vector{white-space:normal}
+.dsk .vshort{display:none}
+/* узкий десктоп: меньше тем и короткий вектор, чтобы всё влезло в один экран */
+@media (max-width:1439px){.dsk .vlong{display:none}.dsk .vshort{display:inline}.dsk .topic:nth-child(n+5){display:none}}
+@media (max-width:1000px){.dsk .topic:nth-child(n+3){display:none}}
+@media (max-width:960px){.dsk .vector{display:none!important}}
+.dsk .vector .vt{font-weight:600;flex:1 1 0;min-width:0}
 .dsk .vector .va{flex:none;font-size:18px;color:var(--t);font-weight:800}
 /* узкий десктоп */
 @media (max-width:1320px){
@@ -257,7 +263,7 @@ a.logo{text-decoration:none}
     <section class="card week" data-week hidden>
       <div class="card-h"><h2 class="card-t serif" style="margin:0">Запросы прошлой недели</h2><div class="card-n"><span data-k="week"></span> · без имён</div></div>
       <div class="topics" data-topics></div>
-      <div class="vector" data-vector><span class="vl">Вектор недели</span><span class="vt" data-k="v_from"></span><span class="va" aria-hidden="true">→</span><span class="vt" data-k="v_to"></span></div>
+      <div class="vector" data-vector><span class="vl">Вектор недели</span><span class="vt vlong" data-k="v_from"></span><span class="vt vshort" data-k="v_from_ds"></span><span class="va" aria-hidden="true">→</span><span class="vt vlong" data-k="v_to"></span><span class="vt vshort" data-k="v_to_ds"></span></div>
     </section>
   </div>
 </main>
@@ -387,6 +393,7 @@ a.logo{text-decoration:none}
     if(v&&v.from&&v.to){
       set('v_from','от «'+v.from+'»');set('v_to','к «'+v.to+'»');
       set('v_from_s','«'+(v.from_short||v.from)+'»');set('v_to_s','«'+(v.to_short||v.to)+'»');
+      set('v_from_ds','от «'+(v.from_short||v.from)+'»');set('v_to_ds','к «'+(v.to_short||v.to)+'»');
     }else{$$('[data-vector]').forEach(function(e){e.hidden=true;});}
     $$('[data-week]').forEach(function(e){e.hidden=false;});
     if(!mob.children.length)document.querySelector('.mob [data-week]').hidden=true;
