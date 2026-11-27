@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "source": "apps_script",
-  "slots_total": 197,
-  "slots_past": 176,
-  "slots_upcoming": 21,
+  "slots_total": 198,
+  "slots_past": 185,
+  "slots_upcoming": 13,
   "participants_active": 16,
   "streams_per_week": 13,
   "trainers": [
@@ -13,10 +13,10 @@
     "Гульназ"
   ],
   "limbic_unload_30d": {
-    "hours": 64,
-    "minutes": 29,
-    "sr_count": 282,
-    "window": "2026-10-28/2026-11-26",
+    "hours": 62,
+    "minutes": 37,
+    "sr_count": 278,
+    "window": "2026-10-29/2026-11-27",
     "includes_trainers": true
   },
   "heat": [
@@ -98,7 +98,7 @@
       "day": "ЧТ",
       "row": "20:00",
       "trainer": "Таня",
-      "avg": 3
+      "avg": 3.3
     }
   ]
 }
