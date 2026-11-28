@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-27",
+  "updated": "2026-11-28",
   "source": "apps_script",
-  "slots_total": 198,
-  "slots_past": 185,
-  "slots_upcoming": 13,
-  "participants_active": 16,
+  "slots_total": 197,
+  "slots_past": 192,
+  "slots_upcoming": 5,
+  "participants_active": 17,
   "streams_per_week": 13,
   "trainers": [
     "Антон",
@@ -13,10 +13,10 @@
     "Гульназ"
   ],
   "limbic_unload_30d": {
-    "hours": 62,
-    "minutes": 37,
-    "sr_count": 278,
-    "window": "2026-10-29/2026-11-27",
+    "hours": 61,
+    "minutes": 6,
+    "sr_count": 269,
+    "window": "2026-10-30/2026-11-28",
     "includes_trainers": true
   },
   "heat": [
@@ -80,7 +80,7 @@
       "day": "СБ",
       "row": "10:00",
       "trainer": "Антон",
-      "avg": 3.8
+      "avg": 3.5
     },
     {
       "day": "ВТ",
